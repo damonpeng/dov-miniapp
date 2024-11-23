@@ -1,0 +1,11 @@
+<van-cell-group inset custom-class="dov-cell-group" wx:for="{{items}}" wx:key="index">
+  <van-cell size="large" center custom-class="dov-cell" title="{{item.title}}" label="{{item.author}}" is-link="{{items.length>1 && item.contents.length>0 ? true : false}}" arrow-direction="{{expandStatus[index] ? 'down' : 'up'}}" bind:click="onToggle" id="{{index}}" />
+  <block wx:if="{{expandStatus[index]}}">
+    <block wx:if="{{component.settings.textAlign=='left'}}">
+      <van-cell custom-class="dov-cell dov-align__left" wx:for="{{item.contents}}" wx:for-item="content" title="{{content}}" wx:key="content" border="{{ false }}" />
+    </block>
+    <block wx:else>
+      <van-cell custom-class="dov-cell dov-align__center" wx:for="{{item.contents}}" wx:for-item="content" title="{{content}}" wx:key="content" border="{{ false }}" />
+    </block>
+  </block>
+</van-cell-group>

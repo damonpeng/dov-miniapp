@@ -1,0 +1,33 @@
+<block wx:for="{{items}}" wx:key="router" wx:if="{{ item.struct==='component' }}">
+  <block wx:if="{{item.type==='player'}}">
+    <player items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='card'}}">
+    <card items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='grid'}}">
+    <grid items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='cell'}}">
+    <cell items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='map'}}">
+    <map items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='swiper'}}">
+    <swiper items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='sidebar'}}">
+    <sidebar items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:else>
+    Not supported component "{{component.type}}".
+  </block>
+</block>

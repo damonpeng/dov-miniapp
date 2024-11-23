@@ -1,0 +1,34 @@
+<block wx:if="{{items.length>1}}">
+  <van-tabs id="dov-tabs" sticky animated swipeable wx:if="{{activeTab}}" active="{{activeTab}}" bind:change="onChangeTab">
+    <van-tab wx:for="{{items}}" wx:key="router" title="{{item.title}}" name="{{item.router}}">
+      <slot name="{{item.router}}" />
+    </van-tab>
+  </van-tabs>
+</block>
+<block wx:else>
+  <block wx:for="{{items}}" wx:key="router" title="" name="{{item.router}}">
+    <slot name="{{item.router}}" />
+  </block>
+</block>
+
+<van-tabbar
+  wx:if="{{site.items.length}}"
+  active="{{ activeTabbar }}"
+  active-color="{{site.settings.style['--tabbar-item-active-color']}}"
+  inactive-color="{{site.settings.style['--tabbar-item-text-color']}}"
+  placeholder="{{true}}"
+  bind:change="onChangeTabbar"
+  custom-class="dov-tabbar"
+>
+  <van-tabbar-item wx:for="{{site.items}}" wx:key="router" wx:for-item="tabbarItem" name="{{tabbarItem.router}}"><image
+      slot="icon"
+      src="{{ tabbarItem.icon }}"
+      mode="aspectFit"
+      style="width:30px;height:30px"
+    /><image
+      slot="icon-active"
+      src="{{ tabbarItem.iconActive }}"
+      mode="aspectFit"
+      style="width:30px;height:30px"
+    />{{tabbarItem.title}}</van-tabbar-item>
+</van-tabbar>

@@ -1,0 +1,21 @@
+{
+  "name": "dov-miniapp",
+  "version": "1.1.2",
+  "description": "基于JSON配置的小程序静态化框架",
+  "scripts": {},
+  "keywords": [],
+  "author": "damo",
+  "license": "MIT",
+  "dependencies": {
+    "@vant/weapp": "^1.11.5"
+  },
+  "devDependencies": {
+    "miniprogram-api-typings": "^2.8.3-1"
+  },
+  "miniprogram": "dist",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/damonpeng/dov-miniapp.git"
+  },
+  "homepage": "https://github.com/damonpeng/dov-miniapp#readme"
+}

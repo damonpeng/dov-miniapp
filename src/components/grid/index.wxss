@@ -1,0 +1,20 @@
+.dov-grid__title {
+  font-size: 14px;
+  text-align: center;
+  height: 36px;
+  overflow: hidden;
+}
+.dov-grid__desc {
+  font-size: 12px;
+  position:absolute;
+  bottom: 56px;
+  right: var(--padding-xs);
+  left: 5px;
+  background:rgba(255,
+  255,
+  255,
+  0.7);
+  color: #222;
+  width: 100%;
+  text-align: center;
+}

@@ -1,0 +1,5 @@
+<van-cell-group wx:for="{{ items }}" wx:key="poster">
+  <van-cell title="{{item.title}}" label="{{item.desc}}">
+    <van-image slot="icon" fit="widthFix" style="margin:5px 10px 10px 0" width="100" height="100" src="{{item.poster}}" />
+  </van-cell>
+</van-cell-group>

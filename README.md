@@ -16,7 +16,7 @@
 ## 示例
 
 微信扫码体验：
-[!Hi多福](./hidov.jpg)
+![Hi多福](./hidov.jpg)
 
 源码参考：<https://github.com/damonpeng/dov-miniapp.git>
 

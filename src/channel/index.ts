@@ -1,4 +1,4 @@
-const app = getApp<IAppOption>();
+const app = getApp();
 
 Component({
   options: {

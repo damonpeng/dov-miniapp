@@ -3,13 +3,14 @@
   text-align: center;
   height: 36px;
   overflow: hidden;
+  color:var(--active-color, #222);
 }
 .dov-grid__desc {
   font-size: 12px;
   position:absolute;
-  bottom: 56px;
-  right: var(--padding-xs);
-  left: 5px;
+  bottom: 0;
+  right: 0;
+  left: 0;
   background:rgba(255,
   255,
   255,
@@ -17,4 +18,5 @@
   color: #222;
   width: 100%;
   text-align: center;
+  color:var(--text-color, #222);
 }

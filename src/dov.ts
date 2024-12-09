@@ -1,6 +1,6 @@
 import FontFace from './core/fontface';
 
-const app = getApp<IAppOption>();
+const app = getApp();
 
 Component({
   properties: {

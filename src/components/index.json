@@ -6,7 +6,6 @@
     "card": "./card/index",
     "cell": "./cell/index",
     "map": "./map/index",
-    "swiper": "./swiper/index",
-    "sidebar": "./sidebar/index"
+    "swiper": "./swiper/index"
   }
 }

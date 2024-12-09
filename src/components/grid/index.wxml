@@ -1,10 +1,10 @@
 <van-grid clickable="{{true}}" column-num="{{module.settings['column-num']}}" custom-class="dov-grid" border="{{false}}">
   <van-grid-item use-slot wx:for="{{ items }}" text="{{ item.title }}" wx:key="title" bind:click="onClickItem" data-link="{{item.link}}" style="positison:relative">
-    <view>
+    <view style="position:relative">
       <van-image wx:if="{{component.settings.round}}" round lazy-load width="{{module.settings.width||110}}" height="{{module.settings.height||150}}" fit="cover" src="{{item.poster}}" />
       <van-image wx:else lazy-load width="{{module.settings.width||110}}" height="{{module.settings.height||150}}" fit="cover" src="{{item.poster}}" />
-      <view class="font-size-sm" class="dov-grid__desc" style="color:var(--text-color, #222)">{{ item.desc }}</view>
+      <view class="font-size-sm" class="dov-grid__desc" style="width:{{module.settings.width||110}}px">{{ item.desc }}</view>
     </view>
-    <view class="font-size-xs" class="dov-grid__title" style="color:var(--active-color, #777)">{{ item.title }}</view>
+    <view class="font-size-xs" class="dov-grid__title" style="width:{{module.settings.width||110}}px">{{ item.title }}</view>
   </van-grid-item>
 </van-grid>

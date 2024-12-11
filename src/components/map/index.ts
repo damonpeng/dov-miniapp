@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const amapFile = require('./amap-wx.130.js');
 let markersData = [];
 

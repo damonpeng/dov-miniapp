@@ -1,5 +1,5 @@
 <van-grid clickable="{{true}}" column-num="{{module.settings['column-num']}}" custom-class="dov-grid" border="{{false}}">
-  <van-grid-item use-slot wx:for="{{ items }}" text="{{ item.title }}" wx:key="title" bind:click="onClickItem" data-link="{{item.link}}" style="positison:relative">
+  <van-grid-item use-slot wx:for="{{ items }}" text="{{ item.title }}" wx:key="title" bind:click="onClickItem" wx:if="{{item.link}}" data-link="{{item.link}}" style="positison:relative">
     <view style="position:relative">
       <van-image wx:if="{{component.settings.round}}" round lazy-load width="{{module.settings.width||110}}" height="{{module.settings.height||150}}" fit="cover" src="{{item.poster}}" />
       <van-image wx:else lazy-load width="{{module.settings.width||110}}" height="{{module.settings.height||150}}" fit="cover" src="{{item.poster}}" />

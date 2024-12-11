@@ -15,6 +15,7 @@ Component({
   },
 
   data: {
+    lastExpandIndex: 0,
     expandStatus: [true]  // 是否展开
   },
 
@@ -34,13 +35,13 @@ Component({
 
       this.setData({
         // 折叠上一次展开的
-        [`expandStatus[${this.lastExpandIndex || 0}]`]: false,
+        [`expandStatus[${this.data.lastExpandIndex || 0}]`]: false,
 
         // 展开当前操作的
         [`expandStatus[${key}]`]: !this.data.expandStatus[key]
       });
 
-      this.lastExpandIndex = key;
+      this.data.lastExpandIndex = key;
     }
   }
 });

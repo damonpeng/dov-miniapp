@@ -1,3 +1,5 @@
+export {}
+
 const app = getApp();
 
 Component({

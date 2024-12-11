@@ -58,20 +58,20 @@ class Dov {
    * Open url
    * @param url 
    */
-  openUrl(url: string) {
-    if (/^weapp:\/\//.test(url)) {
-      const [ignore, appId, path] = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
+  // openUrl(url: string) {
+  //   if (/^weapp:\/\//.test(url)) {
+  //     const [ignore, appId, path] = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
 
-      wx.navigateToMiniProgram({
-        appId,
-        path
-      })
-    } else if (/#小程序:\/\//.test(url)) {
-      wx.navigateToMiniProgram({
-        shortLink: url
-      });
-    }
-  }
+  //     wx.navigateToMiniProgram({
+  //       appId,
+  //       path
+  //     })
+  //   } else if (/#小程序:\/\//.test(url)) {
+  //     wx.navigateToMiniProgram({
+  //       shortLink: url
+  //     });
+  //   }
+  // }
 
   parsePageSettings(pageConfig: any) {
     if (pageConfig?.settings) {

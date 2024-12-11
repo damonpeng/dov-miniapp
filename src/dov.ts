@@ -69,16 +69,25 @@ Component({
             }
           });
         } else if (/^weapp:\/\//.test(url)) {
-          const [ignore, appId, path] = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
+          const matched = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
 
-          wx.navigateToMiniProgram({
-            appId,
-            path
-          })
+          if (matched && matched.length >= 3) {
+            const appId = matched[1];
+            const path = matched[2];
+
+            wx.navigateToMiniProgram({
+              appId,
+              path
+            });
+          } else {
+            console.error('Invalid weapp url', url);
+          }
         } else if (/#小程序:\/\//.test(url)) {
           wx.navigateToMiniProgram({
             shortLink: url
           });
+        } else {
+          console.error('Invalid url', url);
         }
       }
     },
@@ -104,18 +113,13 @@ Component({
       let styles: any = [];
       if (styleSettings) {
         Object.keys(styleSettings).forEach(key => {
-          // exclude custom added styles
-          if (key && !['--font-family', '--background-image'].includes(key)) {
-            if (key === '--base-font-family') {
-              // append default fonts
-              styles.push(`font-family:${styleSettings[key]}, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif`);
-            } else {
-              // vant defined css variables
-              styles.push(`${key}:${styleSettings[key]}`);
-            }
-          }
+          // vant defined css variables
+          key && styles.push(`${key}:${styleSettings[key]}`);
         });
       }
+
+      // customize global fontface
+      styles.push(`font-family:${site.settings.fontface.family || ''}, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif`);
 
       const data = {
         site,

@@ -1,0 +1,1 @@
+<van-image round width="240" height="240" fit="cover" src="{{src}}" />

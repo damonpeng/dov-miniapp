@@ -1,0 +1,6 @@
+<view style="text-align: center;margin: 2rem 0;">
+  <van-image class="{{current.className}}" round fit="contain" width="200" height="200" fit="cover" src="{{current.poster}}" bind:click="onClickPlayer"	/>
+</view>
+<van-grid square clickable border="{{false}}" column-num="3" gutter="10" icon-size="110">
+  <van-grid-item wx:for="{{items}}" wx:key="poster" bind:click="onClickControl" icon="{{item.poster}}" text-depreated="{{ item.title }}" data-audio="{{ item.audio }}" data-poster="{{item.poster}}" />
+</van-grid>

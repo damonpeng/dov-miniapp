@@ -1,0 +1,11 @@
+{
+  "component": true,
+  "usingComponents": {
+    "player": "./player/index",
+    "grid": "./grid/index",
+    "card": "./card/index",
+    "cell": "./cell/index",
+    "map": "./map/index",
+    "swiper": "./swiper/index"
+  }
+}

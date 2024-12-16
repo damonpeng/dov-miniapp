@@ -1,0 +1,15 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-icon": "@vant/weapp/icon/index",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-transition": "@vant/weapp/transition/index",
+    "channel": "./channel/index",
+    "page": "./page/index",
+    "module": "./module/index",
+    "pagelet": "./pagelet/index"
+  }
+}

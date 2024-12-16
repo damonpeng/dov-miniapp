@@ -1,0 +1,8 @@
+<view style="{{style}}">
+  <channel router="{{channel.router}}" site="{{site}}" wx:if="{{channel.items.length}}" items="{{channel.items}}">
+    <page router="{{page.router}}" site="{{site}}" items="{{page.items}}" page="{{page}}" wx:for="{{page.items}}" wx:key="router" slot="{{page.router}}">
+      <module site="{{site}}" wx:if="{{item.items.length}}" page="{{page}}" module="{{item}}" items="{{item.items}}" />
+    </page>
+    <pagelet site="{{site}}" pagelet="{{pagelet}}"  />
+  </channel>
+</view>

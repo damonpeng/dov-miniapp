@@ -1,0 +1,16 @@
+<page-container show="{{pagelet.visible}}" close-on-slide-down="{{true}}" bind:clickoverlay="onClickOverlay">
+
+  <view slot="pagelet" />
+  <view slot="imageViewer" />
+</page-container>
+
+<slot name="pagelet">
+12313
+</slot>
+
+<slot name="imageViewer">
+  <van-image width="{{imageViewerWidth}}" height="{{imageViewerHeight}}" position="center" fit="contain" src="{{imageViewerSrc}}" />
+  <van-button round type="primary" size="large" bind:click="onClickDownload" color="linear-gradient(to right, #4bb0ff, #6149f6)" style="position:absolute;width:60%;bottom:300rpx;left:50%;transform:translateX(-50%);" data-src="{{imageViewerSrc}}">下载到相册</van-button>
+
+  <van-button round type="default" size="large" style="position:absolute;width:60%;bottom:150rpx;left:20%;" bind:click="onClickClose">关闭</van-button>
+</slot>

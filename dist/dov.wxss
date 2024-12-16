@@ -1,0 +1,12 @@
+page, dov, channel{
+  height: 100%;
+}
+.dov-align__left {
+  text-align: left;
+}
+.dov-align__center {
+  text-align: center;
+}
+.dov-align__right {
+  text-align: right;
+}

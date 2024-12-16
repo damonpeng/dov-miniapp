@@ -1,6 +1,6 @@
 {
   "name": "dov-miniapp",
-  "version": "1.1.13",
+  "version": "1.1.17",
   "description": "基于JSON配置的小程序静态化框架",
   "keywords": [],
   "author": "damo",
@@ -9,14 +9,17 @@
     "dist"
   ],
   "scripts": {
-    "build": "npx tsc"
+    "dev": "npx tsc --watch && npm run copyfiles",
+    "build": "npx tsc && npm run copyfiles",
+    "copyfiles" : "copyfiles -u 1 src/*.wxml src/*.wxss src/*.json src/*.js src/**/*.wxml src/**/*.wxss src/**/*.json src/**/*.js src/**/**/*.wxml src/**/**/*.wxss src/**/**/*.json src/**/**/*.js dist/"
   },
   "dependencies": {
     "@vant/weapp": "^1.11.5"
   },
   "devDependencies": {
-    "typescript": "^5.7.2",
-    "miniprogram-api-typings": "^2.8.3-1"
+    "copyfiles": "^2.4.1",
+    "miniprogram-api-typings": "^2.8.3-1",
+    "typescript": "^5.7.2"
   },
   "miniprogram": "dist",
   "repository": {

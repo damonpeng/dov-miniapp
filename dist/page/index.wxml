@@ -1,0 +1,7 @@
+<view class="dov-page">
+  <slot />
+
+  <view wx:if="{{site.plugins && site.plugins.txc && site.plugins.txc.productId}}" style="text-align:center;width:100%;margin:20px 0 10px;">
+    <van-button type="default" size="small" bind:click="onClickFeedback" data-productId="{{site.plugins.txc.productId}}">提建议</van-button>
+  </view>
+</view>

@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/dov"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "HiDov",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "dov": "dov-miniapp/dov"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,63 @@
+{
+  "struct": "site",
+  "title": "Hi多福",
+  "icon": "",
+  "plugins": {
+    "txc": {
+      "productId": 0
+    }
+  },
+  "settings": {
+    
+    "style": {
+      "--cell-font-size": "22px"
+    },
+    "shareInfo": {
+      "title": "${default}",
+      "path": "${default}",
+      "query": "${default}",
+      "image": "${default}"
+    }
+  },
+  "items": [
+    {
+      "struct": "channel",
+      "router": "/index",
+      "title": "听音律",
+      "icon": "/static/icon/listening-default.png",
+      "iconActive": "/static/icon/listening.png",
+      "items": [
+        {
+          "struct": "page",
+          "title": "歌单",
+          "router": "/index/listening",
+          "script": "http://127.0.0.1:55802/appservice/manifest/listening/list-${version}.json",
+          "version": "1.0"
+        }
+      ]
+    },
+    {
+      "struct": "channel",
+      "router": "/reading",
+      "title": "读古诗",
+      "icon": "/static/icon/reading-default.png",
+      "iconActive": "/static/icon/reading.png",
+      "items": [
+        {
+          "struct": "page",
+          "title": "唐诗三百首",
+          "router": "/reading/s1",
+          "script": "http://127.0.0.1:55802/appservice/manifest/reading/s1-${version}.json",
+          "version": "1.0"
+        },
+        {
+          "struct": "page",
+          "title": "三字经",
+          "router": "/reading/sanzijing",
+          "script": "http://127.0.0.1:55802/appservice/manifest/reading/sanzijing-${version}.json",
+          "version": "1.0"
+        }
+      ]
+    }
+  ]
+}

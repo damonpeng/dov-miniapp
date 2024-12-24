@@ -1,0 +1,95 @@
+{
+  "struct": "page",
+  "title": "磨耳朵",
+  "router": "/index/listening",
+  "verison": "1.0",
+  "settings": {
+    "keepScreenOn": true
+  },
+  "items": [
+    {
+      "struct": "module",
+      "title": "🎵 常听",
+      "desc": "",
+      "router": "/index/listening/music",
+      "extends": {},
+      "items": [
+        {
+          "struct": "component",
+          "type": "grid",
+          "title": "播放列表",
+          "items": [
+            {
+              "title": "Super Simple Songs",
+              "desc": "磨耳朵系列",
+              "poster": "http://s.dayanmo.com/dov/static/media/listening/super-simple-songs.jpg",
+              "link": "#小程序://QQ音乐/3ozn00yAvM5edCG"
+            },
+            {
+              "title": "粤语儿歌大全",
+              "desc": "",
+              "poster": "https://y.qq.com/music/photo_new/T002R500x500M000002UVhvw0piHPf.jpg?n=1",
+              "link": "#小程序://QQ音乐/UliWFfAhseuQ73z"
+            },
+            {
+              "title": "迪士尼英语儿歌",
+              "desc": "",
+              "poster": "https://y.qq.com/music/photo_new/T002R500x500M000004bN6D534vZIU.jpg?n=1",
+              "link": "#小程序://QQ音乐/X95QLUpo1FbCc5h"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "struct": "module",
+      "title": "🎬 视频",
+      "router": "/listening/index/video",
+      "extends": {},
+      "items": [
+        {
+          "struct": "component",
+          "type": "grid",
+          "title": "播放列表",
+          "items": [
+            {
+              "title": "变形金钢第一代 Transformers",
+              "desc": "美国 1984",
+              "poster": "https://puui.qpic.cn/vcover_vt_pic/0/q7gdcpyvz1k8d1it1444960713.jpg/260",
+              "link": "#小程序://腾讯视频/OR1iD3KBLegpXAc"
+            },
+            {
+              "title": "微观小世界 Minuscule",
+              "desc": "法国 2006",
+              "poster": "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p699398524.webp",
+              "link": "#小程序://哔哩哔哩/KHP54asBlN5th0J",
+              "external_link": "https://movie.douban.com/subject/2213550/"
+            },
+            {
+              "title": "小小世界 Tiny World",
+              "desc": "美国 2020",
+              "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2619929897.webp",
+              "link": "#小程序://哔哩哔哩/6d2WcaKiiQ6dPbq",
+              "external_link": "https://movie.douban.com/subject/35203215/"
+            },
+            {
+              "title": "蓝色星球[第一季] The Blue Planet Season 1",
+              "desc": "英国 2001",
+              "poster": "https://img3.doubanio.com/view/photo/s_ratio_poster/public/p2574122772.jpg",
+              "link": "#小程序://腾讯视频/HtB9XOlz7bw3Koj",
+              "external_link": "https://movie.douban.com/subject/1325007/"
+            },
+            {
+              "title": "蓝色星球[第二季] The Blue Planet Season 2",
+              "desc": "英国 2017",
+              "poster": "http://s.dayanmo.com/dov/static/media/watching/blue-planet-s2-260.jpeg",
+              "link": "#小程序: //腾讯视频/uz7Q4YZYMj3KVuC",
+              "link_cn": "#小程序://腾讯视频/3S6QesVT5I92bdE",
+              "external_link": "https://movie.douban.com/subject/26979545/"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

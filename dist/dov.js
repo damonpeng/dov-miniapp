@@ -94,6 +94,7 @@ Component({
             await dov.parseDataByRouter(router);
             const site = dov.manifest.getSite();
             const styleSettings = site?.settings?.style;
+            const fontSettings = site?.settings?.fontface;
             let styles = [];
             if (styleSettings) {
                 Object.keys(styleSettings).forEach(key => {
@@ -102,7 +103,9 @@ Component({
                 });
             }
             // customize global fontface
-            styles.push(`font-family:${site.settings.fontface.family || ''}, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif`);
+            if (fontSettings) {
+                styles.push(`font-family:${fontSettings.family || ''}, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif`);
+            }
             const data = {
                 site,
                 channel: dov.manifest.getChannel(router),

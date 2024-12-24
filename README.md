@@ -11,6 +11,7 @@
 ## 示例
 
 源码附在本工程内的`miniprogram/`，微信扫码体验：
+
 ![Hi多福](./hidov.jpg)
 
 
@@ -31,8 +32,8 @@
 
 配置文件均在 `manifest/` 下，按需修改。整体层级`struct`遵循：**site -  channel - page - module - component**。
 
-### "struct": "site" 级功能
-#### 开启分享
+### C1 "struct": "site" 级功能
+#### C1.1 开启分享
 ```
 {
   "struct": "site",
@@ -50,7 +51,7 @@
  - ${default}: 优先取 `page` 配置的title字段，`site` 保底
  - ${logo}：取 `site` 的icon字段
 
-#### 全局样式定制
+#### C1.2 全局样式定制
 ```
 {
   "struct": "site",
@@ -63,8 +64,8 @@
 ```
 名称和控制范围，可参考[有赞style var](https://github.com/youzan/vant-weapp/blob/dev/packages/common/style/var.less)。
 
-### "struct": "channel" 级功能
-#### 指定底部tab的图标
+### C2 "struct": "channel" 级功能
+#### C2.1 指定底部tab的图标
 ```
 {
   "struct": "channel",
@@ -73,8 +74,8 @@
 }
 ```
 
-### "struct": "page" 级功能
-#### 设置屏幕常亮
+### C3 "struct": "page" 级功能
+#### C3.1 设置屏幕常亮
 ```
 {
   "struct": "page",
@@ -84,8 +85,8 @@
 }
 ```
 
-### "struct": "module" 级功能
-#### 隐藏模块标题
+### C4 "struct": "module" 级功能
+#### C4.1 隐藏模块标题
 ```
 {
   "struct": "module",
@@ -95,7 +96,7 @@
 }
 ```
 
-### "struct": "component" 级功能
+### C5 "struct": "component" 级功能
 
 支持的组件如下表。
 

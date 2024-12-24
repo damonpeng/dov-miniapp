@@ -8,7 +8,6 @@
     }
   },
   "settings": {
-    
     "style": {
       "--cell-font-size": "22px"
     },

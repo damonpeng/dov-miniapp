@@ -21,7 +21,6 @@ Component({
 
   lifetimes: {
     created() {
-      console.log(123123);
     },
 
     ready() {

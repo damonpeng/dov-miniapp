@@ -30,7 +30,7 @@
           "struct": "page",
           "title": "歌单",
           "router": "/index/listening",
-          "script": "http://127.0.0.1:55802/appservice/manifest/listening/list-${version}.json",
+          "script": "http://127.0.0.1:17208/appservice/manifest/listening/list-${version}.json",
           "version": "1.0"
         }
       ]
@@ -46,14 +46,14 @@
           "struct": "page",
           "title": "唐诗三百首",
           "router": "/reading/s1",
-          "script": "http://127.0.0.1:55802/appservice/manifest/reading/s1-${version}.json",
+          "script": "http://127.0.0.1:17208/appservice/manifest/reading/s1-${version}.json",
           "version": "1.0"
         },
         {
           "struct": "page",
           "title": "三字经",
           "router": "/reading/sanzijing",
-          "script": "http://127.0.0.1:55802/appservice/manifest/reading/sanzijing-${version}.json",
+          "script": "http://127.0.0.1:17208/appservice/manifest/reading/sanzijing-${version}.json",
           "version": "1.0"
         }
       ]

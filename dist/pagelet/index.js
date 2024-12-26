@@ -18,7 +18,6 @@ Component({
     data: {},
     lifetimes: {
         created() {
-            console.log(123123);
         },
         ready() {
             console.log('pagelet attached', this.data);

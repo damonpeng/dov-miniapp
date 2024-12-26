@@ -17,7 +17,7 @@
 
 ## 快速开始
 
-1. 复制工程代码到本地，使用`[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)`打开。
+1. 复制工程代码到本地，使用[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)打开。
 
 2. 因为是走本地运行模式，因此需要替换`miniprogram/app.js` 和 `miniprogram/manifest/index-1.0.json` 中的127.0.0.1后的端口，可以通过微信开发者工具network抓包的Referer看到真实端口（端口在每次重启开发者工具会更新）。
 

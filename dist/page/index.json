@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
+    "debug": "../debug/index",
     "van-button": "@vant/weapp/button/index"
   }
 }

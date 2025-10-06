@@ -8,9 +8,10 @@ const request_1 = __importDefault(require("./core/request"));
 exports.http = request_1.default;
 const manifest_1 = __importDefault(require("./core/manifest"));
 class Dov {
-    constructor(manifestURL) {
-        this.manifest = new manifest_1.default();
+    constructor(manifestURL, siteRoot) {
+        this.manifest = new manifest_1.default(siteRoot);
         this.manifestURL = manifestURL;
+        this.siteRoot = siteRoot;
     }
     /**
      * Get scripts with version from the manifest. Call once.
@@ -24,10 +25,12 @@ class Dov {
      */
     async parseDataByRouter(router) {
         const script = this.manifest.getPageScriptURL(router);
+        let result = null;
         if (script) {
             const response = await request_1.default.get(script);
-            this.manifest.parse(response);
+            result = this.manifest.parse(response);
         }
+        return result;
     }
     /**
      * Start page
@@ -45,23 +48,6 @@ class Dov {
             audioContext.play();
         }
     }
-    /**
-     * Open url
-     * @param url
-     */
-    // openUrl(url: string) {
-    //   if (/^weapp:\/\//.test(url)) {
-    //     const [ignore, appId, path] = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
-    //     wx.navigateToMiniProgram({
-    //       appId,
-    //       path
-    //     })
-    //   } else if (/#小程序:\/\//.test(url)) {
-    //     wx.navigateToMiniProgram({
-    //       shortLink: url
-    //     });
-    //   }
-    // }
     parsePageSettings(pageConfig) {
         if (pageConfig?.settings) {
             // settings.keepScreenOn

@@ -1,5 +1,8 @@
+<debug site="{{site}}" data="{{module}}" />
+
 <block wx:if="{{!module.settings || !module.settings.hideTitle}}">
   <view wx:if="{{module.title}}" class="dov-module__title">{{module.title}}</view>
   <view wx:if="{{module.desc}}" class="dov-module__desc">{{module.desc}}</view>
 </block>
-<components items="{{items}}" />
+
+<components site="{{site}}" module="{{module}}" items="{{items}}" />

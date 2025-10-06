@@ -1,0 +1,13 @@
+{
+  "watch": [
+    "src"
+  ],
+  "ext": "wxml,wxss,json,js",
+  "ignore": [
+    "**/*.ts",
+    "node_modules/**"
+  ],
+  "delay": 500,
+  "verbose": true,
+  "exec": "npm run copyfiles"
+}

@@ -1,7 +1,7 @@
 .dov-module__title {
-  margin: 0;
+  margin: 0 0 10px;
   padding: 20px 10px 0;
-  color: var(--active-color, #455a6499);
+  color: var(--dov-module__title_color, #455a6499);
   font-weight: normal;
   font-size: 18px;
   line-height: 16px;
@@ -9,7 +9,7 @@
 .dov-module__desc {
   margin: 0;
   padding: 5px 10px 0;
-  color: var(--text-color, #455a6466);
+  color: var(--dov-module__desc_color, #455a6466);
   font-weight: normal;
   font-size: 12px;
   line-height: 14px;

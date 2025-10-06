@@ -1,4 +1,4 @@
-export {}
+import { ManifestNode } from '../core/manifest';
 
 const app = getApp();
 
@@ -9,6 +9,10 @@ Component({
 
   properties: {
     router: String,
+    channel: {
+      type: null,
+      value: {},
+    },
     items: {
       type: Array,
       value: [],
@@ -21,12 +25,13 @@ Component({
 
   data: {
     activeTab: '',
-    activeTabbar: ''
+    activeTabbar: '',
   },
 
   lifetimes: {
     async ready() {
-      console.log('channel attached', this.data);
+      console.log(`[channel][attached] ${this.data.channel.title}`, this.data);
+      console.log('app.dov.data', app.dov.data);
 
       const { path, query } = wx.getLaunchOptionsSync();
 
@@ -41,7 +46,7 @@ Component({
           this.updateCurrentTab(query.tab);
         }
       } else {
-        const defaultRouter = this.data.items[0].router;
+        const defaultRouter = (this.data.items[0] as ManifestNode).router;
 
         this.updateCurrentTabbar();
         app.dov.setPageData(defaultRouter);
@@ -54,7 +59,7 @@ Component({
         'query': ''
       });
 
-      console.info(`tabbar=${query.tabbar}&tab=${query.tab}`);
+      (query.tabbar || query.tab) && console.log(`tabbar=${query.tabbar}&tab=${query.tab}`);
     }
   },
 
@@ -100,7 +105,7 @@ Component({
         activeTab = router;
       } else {
         // set the first page
-        activeTab = this.data.items[0].router;
+        activeTab = (this.data.items[0] as { router: string }).router;
       }
 
       this.setData({

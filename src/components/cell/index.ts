@@ -28,7 +28,7 @@ Component({
     onToggle(event: any) {
       const key = event.target.id;
 
-      // can not collasp when only one item.
+      // can not collapse when only one item.
       if (this.data.items.length <= 1) {
         return;
       }

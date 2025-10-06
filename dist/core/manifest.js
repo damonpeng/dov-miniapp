@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ManifestNodeType = void 0;
 /**
  * Manifest parser
  */
@@ -15,14 +16,17 @@ var ManifestNodeType;
     ManifestNodeType["Page"] = "page";
     ManifestNodeType["Module"] = "module";
     ManifestNodeType["Component"] = "component";
-})(ManifestNodeType || (ManifestNodeType = {}));
+    ManifestNodeType["Pagelet"] = "pagelet";
+})(ManifestNodeType || (exports.ManifestNodeType = ManifestNodeType = {}));
 class Manifest {
-    constructor() {
+    constructor(siteRoot) {
         this.site = {};
         this.channelMap = {};
         this.pageMap = {};
         this.moduleOfPageMap = {};
         this.componentOfPageMap = {};
+        this.pageletOfPageMap = {};
+        this.siteRoot = siteRoot;
     }
     /**
      * Parse manifest data from a URL.
@@ -38,6 +42,7 @@ class Manifest {
         let pageMap = {};
         let moduleOfPageMap = {};
         let componentOfPageMap = {};
+        let pageletOfPageMap = {};
         let moduleOfPageReverseMap = {};
         // walker the JSON tree, conver to maps
         let parseItem = (node, parentNode) => {
@@ -68,8 +73,14 @@ class Manifest {
                         const moduleRouter = parentNode.router;
                         const page = moduleOfPageReverseMap[moduleRouter];
                         !componentOfPageMap[page] && (componentOfPageMap[page] = {});
-                        !componentOfPageMap[page][moduleRouter] && (componentOfPageMap[page][moduleRouter] = {});
                         componentOfPageMap[page][moduleRouter] = node;
+                    }
+                    break;
+                case Struct_1.default.pagelet:
+                    if (parentNode) {
+                        const pageRouter = parentNode.router;
+                        !pageletOfPageMap[pageRouter] && (pageletOfPageMap[pageRouter] = {});
+                        pageletOfPageMap[pageRouter][node.router] = node;
                     }
                     break;
             }
@@ -82,6 +93,8 @@ class Manifest {
         Object.assign(this.pageMap, pageMap);
         Object.assign(this.moduleOfPageMap, moduleOfPageMap);
         Object.assign(this.componentOfPageMap, componentOfPageMap);
+        Object.assign(this.pageletOfPageMap, pageletOfPageMap);
+        return manifest;
     }
     /**
      * Get site
@@ -95,13 +108,14 @@ class Manifest {
             [ManifestNodeType.Channel]: this.channelMap,
             [ManifestNodeType.Page]: this.pageMap,
             [ManifestNodeType.Module]: this.moduleOfPageMap,
-            [ManifestNodeType.Component]: this.componentOfPageMap
+            [ManifestNodeType.Component]: this.componentOfPageMap,
+            [ManifestNodeType.Pagelet]: this.pageletOfPageMap,
         })[name];
         let node = nodeMap[router];
         if (!node) {
             // matching children node
             Object.keys(nodeMap).forEach(itemRouter => {
-                if (router.indexOf(itemRouter) >= 0) {
+                if (itemRouter.indexOf(router) >= 0) {
                     node = nodeMap[itemRouter];
                 }
             });
@@ -142,13 +156,28 @@ class Manifest {
         return this.componentOfPageMap[pageRouter][moduleRouter];
     }
     /**
+     * Get pagelets of a page.
+     * @param pageRouter page name, default returns the first page.
+     * @returns
+     */
+    getPageletsOfPage(pageRouter) {
+        return this.pageletOfPageMap[pageRouter];
+    }
+    /**
      * Get URL of the page json data file
      * @param router
      * @returns
      */
     getPageScriptURL(router) {
         const page = this.getPage(router);
-        return page && page.script ? page.script.replace('${version}', page.version) : '';
+        let scriptURL = router;
+        if (page && page.script) {
+            scriptURL = page.script.replace('${version}', page.version);
+        }
+        if (/^http(s)?:\/\//.test(scriptURL) === false) {
+            scriptURL = this.siteRoot + scriptURL;
+        }
+        return scriptURL;
     }
 }
 exports.default = Manifest;

@@ -1,10 +1,9 @@
-<van-grid clickable="{{true}}" column-num="{{module.settings['column-num']}}" custom-class="dov-grid" border="{{false}}">
-  <van-grid-item use-slot wx:for="{{ items }}" text="{{ item.title }}" wx:key="title" bind:click="onClickItem" wx:if="{{item.link}}" data-link="{{item.link}}" style="positison:relative">
-    <view style="position:relative">
-      <van-image wx:if="{{component.settings.round}}" round lazy-load width="{{module.settings.width||110}}" height="{{module.settings.height||150}}" fit="cover" src="{{item.poster}}" />
-      <van-image wx:else lazy-load width="{{module.settings.width||110}}" height="{{module.settings.height||150}}" fit="cover" src="{{item.poster}}" />
-      <view class="font-size-sm" class="dov-grid__desc" style="width:{{module.settings.width||110}}px">{{ item.desc }}</view>
+<van-grid clickable="{{true}}" column-num="{{component.settings['column-num'] || 4}}" custom-class="dov-grid" gutter="{{component.settings.gutter}}" border="{{component.settings.border}}">
+  <van-grid-item use-slot wx:for="{{items}}" text="{{item.title}}" wx:key="title" bind:click="onClickGridItem" data-link="{{item.link||''}}" style="positison:relative">
+    <view style="position:relative" wx:if="{{item.poster}}">
+      <van-image round="{{component.settings.round}}" lazy-load width="{{component.settings.width||60}}" height="{{component.settings.height||60}}" fit="cover" src="{{item.poster}}" />
     </view>
-    <view class="font-size-xs" class="dov-grid__title" style="width:{{module.settings.width||110}}px">{{ item.title }}</view>
+    <view class="dov-grid__title">{{ item.title }}</view>
+    <view wx:if="{{item.desc}}" class="dov-grid__desc">{{ item.desc }}</view>
   </van-grid-item>
 </van-grid>

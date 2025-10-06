@@ -1,3 +1,14 @@
 .dov-page {
   width: 100%;
 }
+.dov-pagelet__title {
+  font-size: 120%;
+  font-weight: 700;
+  margin: 10px;
+}
+.dov-pagelet__content {
+  margin: 10px;
+}
+.dov-pagelet__section {
+  margin-bottom: 15px;
+}

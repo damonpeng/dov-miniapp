@@ -5,18 +5,23 @@ Component({
 
   // 组件外部可传属性
   properties: {
-    pagelet: {
+    images: {
+      type: Array,
+      value: [],
+    },
+    texts: {
       type: Object,
       value: {},
     },
-    site: {
-      type: Object,
-      value: {},
-    }
+    title: {
+      type: String,
+      value: '',
+    },
   },
 
   // 组件内部数据
   data: {
+    isShow: true
   },
 
   lifetimes: {
@@ -24,7 +29,8 @@ Component({
     },
 
     ready() {
-      console.log('pagelet attached', this.data);
+      console.log(`[pagelet][attached]`, this.data);
+      this.setData({ isShow: true })
     }
   },
 
@@ -32,6 +38,22 @@ Component({
   },
 
   methods: {
+    onClose() {
+      this.setData({ isShow: false })
+      this.triggerEvent('closePagelet');
+    },
+
+    onClickImage(event: any) {
+      wx.previewImage({
+        urls: this.data.images,
+        current: event.detail.src
+      });
+    },
+
+    onShare() {
+      // @todo 指定分享内容
+    },
+    /**
     onClickDownload(event: any) {
       const imageSrc = event.currentTarget.dataset.src,
         _this = this;
@@ -92,6 +114,6 @@ Component({
         }
       });
     }
-
+    */
   }
 });

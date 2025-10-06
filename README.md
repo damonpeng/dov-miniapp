@@ -101,10 +101,10 @@
 支持的组件如下表。
 
 | 组件名称 | 功能             |
-| -------- | -------------- |
-| card     | 图文卡          |
-| cell     | 通栏条，支持折叠  |
-| grid     | 网格            |
+| -------- | ---------------- |
+| card     | 图文卡           |
+| cell     | 通栏条，支持折叠 |
+| grid     | 网格             |
 | player   | 音乐播放器       |
 
 
@@ -125,6 +125,10 @@
 
 本地调试：调试中JSON数据文件频繁变更，可以指定本地文件。可将请求远程URL替换为本地，如：`http://127.0.0.1:PORT/appservice/manifest/`。其中端口号PORT可在network抓包查看`header`的`Referer`中获取。
 
+相关资源：
+* 支持的图标库：https://www.iconfont.cn/collections/detail?cid=31945
+* 本地开发：`npm run dev`，改动后在小程序开发者工具构建npm
+* 指定路由访问：`pages/dov?router=pagelet#/wood/hongmu/tanxiangzitan`
 
 ## 致谢
 

@@ -1,12 +1,38 @@
-<page-container show="{{pagelet.visible}}" close-on-slide-down="{{true}}" bind:clickoverlay="onClickOverlay">
+<van-popup round
+  closeable close-icon="close" close-icon-position="top-left"
+  show="{{isShow}}"
+  position="bottom"
+  custom-style="height: 90%"
+  bind:close="onClose"
+>
+  <swiper wx:if="{{images}}" indicator-dots="{{true}}" indicator-type="worm" transformer-type="scaleAndFade" easing-function="" bindchange="" style="height:420px">
+    <block wx:for="{{images}}" wx:key="*this">
+      <swiper-item>
+        <view class="swiper-item">
+          <image style="width:100%;height:420px;" src="{{item}}" mode="aspectFill" lazy-load="{{true}}" show-menu-by-longpress="true" bindtap="onClickImage" />
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <van-row>
+    <van-col span="20"><view wx:if="{{title}}" class="dov-pagelet__title">{{title}}</view></van-col>
+    <van-col span="4">
+      <button open-type="share" plain="{{true}}" style="border:none">
+        <van-icon name="share-o" size="20px" bind:click="onShare" />
+      </button>
+    </van-col>
+  </van-row>
+  <view wx:if="{{texts}}" class="dov-pagelet__content">
+    <block wx:for="{{texts}}" wx:key="*this">
+      <view class="dov-pagelet__section">{{item}}</view>
+    </block>
+  </view>
+</van-popup>
 
-  <view slot="pagelet" />
+<!--
+<page-container show="{{pagelet.visible}}" close-on-slide-down="{{true}}" bind:clickoverlay="onClickOverlay">
   <view slot="imageViewer" />
 </page-container>
-
-<slot name="pagelet">
-12313
-</slot>
 
 <slot name="imageViewer">
   <van-image width="{{imageViewerWidth}}" height="{{imageViewerHeight}}" position="center" fit="contain" src="{{imageViewerSrc}}" />
@@ -14,3 +40,5 @@
 
   <van-button round type="default" size="large" style="position:absolute;width:60%;bottom:150rpx;left:20%;" bind:click="onClickClose">关闭</van-button>
 </slot>
+
+-->

@@ -7,15 +7,15 @@ Component({
             value: [],
         },
         module: {
-            type: Object,
+            type: null,
             value: {},
         },
         page: {
-            type: Object,
+            type: null,
             value: {},
         },
         site: {
-            type: Object,
+            type: null,
             value: {},
         }
     },
@@ -23,7 +23,7 @@ Component({
     data: {},
     lifetimes: {
         ready() {
-            console.log('module attached', this.data);
+            console.log(`[module][attached] ${this.data.module.title}`, this.data);
         }
     },
     methods: {}

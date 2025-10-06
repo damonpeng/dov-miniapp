@@ -3,7 +3,7 @@ Component({
     // 组件外部可传属性
     properties: {
         items: {
-            type: Array,
+            type: null,
             value: [],
         },
         module: {
@@ -14,8 +14,8 @@ Component({
     // 组件内部数据
     data: {},
     lifetimes: {
-        attached() {
-            console.log('components attached', this.properties);
+        ready() {
+            console.log(`[components][attached] ${this.data.items[0].title || this.data.items[0].type}`, this.data);
         }
     },
     methods: {

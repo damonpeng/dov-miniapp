@@ -1,8 +1,14 @@
 <view style="{{style}}">
-  <channel router="{{channel.router}}" site="{{site}}" wx:if="{{channel.items.length}}" items="{{channel.items}}">
-    <page router="{{page.router}}" site="{{site}}" items="{{page.items}}" page="{{page}}" wx:for="{{page.items}}" wx:key="router" slot="{{page.router}}">
-      <module site="{{site}}" wx:if="{{item.items.length}}" page="{{page}}" module="{{item}}" items="{{item.items}}" />
-    </page>
-    <pagelet site="{{site}}" pagelet="{{pagelet}}"  />
-  </channel>
+  <block wx:if="{{channel.items.length>0}}">
+    <channel router="{{channel.router}}" site="{{site}}" channel="{{channel}}" items="{{channel.items}}">
+      <page slot="{{page.router}}" router="{{page.router}}" site="{{site}}" page="{{page}}" items="{{page.items}}">
+        <block wx:if="{{page.items.length>0}}" wx:for="{{page.items}}" wx:key="{{page.router}}" wx:for-item="moduleItem">
+          <module site="{{site}}" page="{{page}}" module="{{moduleItem}}" items="{{moduleItem.items}}" />
+          <view slot="{{moduleItem.router}}" site="{{site}}" page="{{page}}" module="{{moduleItem}}" items="{{moduleItem.items}}" />
+        </block>
+      </page>
+    </channel>
+  </block>
 </view>
+
+<pagelet wx:if="{{isShowPagelet}}" title="{{pageletData.title}}" images="{{pageletData.images}}" texts="{{pageletData.texts}}" bind:closePagelet="onClosePagelet" />

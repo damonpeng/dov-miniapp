@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
+    "debug": "../debug/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "van-tabbar": "@vant/weapp/tabbar/index",

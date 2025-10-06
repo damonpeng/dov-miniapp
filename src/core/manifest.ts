@@ -5,7 +5,7 @@ import http from './request';
 import Struct from '../types/Struct';
 import Components from '../types/Components';
 
-interface ManifestNode {
+export interface ManifestNode {
   "struct": Struct,
   "component": Components,
   "title": string,
@@ -13,15 +13,17 @@ interface ManifestNode {
   "router": string,
   "script"?: string,
   "version"?: string,
+  "audio"?: string,
   "items"?: Array<ManifestNode>,
 }
 
-enum ManifestNodeType {
+export enum ManifestNodeType {
   Site = 'site',
   Channel = 'channel',
   Page = 'page',
   Module = 'module',
-  Component = 'component'
+  Component = 'component',
+  Pagelet = 'pagelet'
 }
 
 class Manifest {
@@ -30,13 +32,19 @@ class Manifest {
   pageMap: any = {};
   moduleOfPageMap: any = {};
   componentOfPageMap: any = {};
+  pageletOfPageMap: any = {};
+  siteRoot: string;
+
+  constructor(siteRoot: string) {
+    this.siteRoot = siteRoot;
+  }
 
   /**
    * Parse manifest data from a URL.
    * @param manifestURL manifest URL, it should be a remote server URL.
    */
   async parseFromURL(manifestURL: string) {
-    const data: ManifestNode = await http.get(manifestURL)
+    const data: ManifestNode = await http.get(manifestURL);
 
     this.parse(data);
 
@@ -48,6 +56,7 @@ class Manifest {
     let pageMap: any = {};
     let moduleOfPageMap: any = {};
     let componentOfPageMap: any = {};
+    let pageletOfPageMap: any = {};
     let moduleOfPageReverseMap: any = {};
 
     // walker the JSON tree, conver to maps
@@ -83,9 +92,15 @@ class Manifest {
             const moduleRouter = parentNode.router;
             const page = moduleOfPageReverseMap[moduleRouter];
             !componentOfPageMap[page] && (componentOfPageMap[page] = {});
-            !componentOfPageMap[page][moduleRouter] && (componentOfPageMap[page][moduleRouter] = {})
-
             componentOfPageMap[page][moduleRouter] = node;
+          }
+          break;
+
+        case Struct.pagelet:
+          if (parentNode) {
+            const pageRouter = parentNode.router;
+            !pageletOfPageMap[pageRouter] && (pageletOfPageMap[pageRouter] = {});
+            pageletOfPageMap[pageRouter][node.router] = node;
           }
           break;
       }
@@ -101,6 +116,9 @@ class Manifest {
     Object.assign(this.pageMap, pageMap);
     Object.assign(this.moduleOfPageMap, moduleOfPageMap);
     Object.assign(this.componentOfPageMap, componentOfPageMap);
+    Object.assign(this.pageletOfPageMap, pageletOfPageMap);
+
+    return manifest;
   }
 
   /**
@@ -116,14 +134,15 @@ class Manifest {
       [ManifestNodeType.Channel]: this.channelMap,
       [ManifestNodeType.Page]: this.pageMap,
       [ManifestNodeType.Module]: this.moduleOfPageMap,
-      [ManifestNodeType.Component]: this.componentOfPageMap
+      [ManifestNodeType.Component]: this.componentOfPageMap,
+      [ManifestNodeType.Pagelet]: this.pageletOfPageMap,
     })[name];
     let node = nodeMap[router];
 
     if (!node) {
       // matching children node
       Object.keys(nodeMap).forEach(itemRouter => {
-        if (router.indexOf(itemRouter) >= 0) {
+        if (itemRouter.indexOf(router) >= 0) {
           node = nodeMap[itemRouter];
         }
       })
@@ -170,13 +189,32 @@ class Manifest {
   }
 
   /**
+   * Get pagelets of a page.
+   * @param pageRouter page name, default returns the first page.
+   * @returns
+   */
+  getPageletsOfPage(pageRouter: string) {
+    return this.pageletOfPageMap[pageRouter];
+  }
+
+  /**
    * Get URL of the page json data file
    * @param router 
    * @returns 
    */
   getPageScriptURL(router: string) {
     const page = this.getPage(router);
-    return page && page.script ? page.script.replace('${version}', page.version) : '';
+    let scriptURL = router;
+
+    if (page && page.script) {
+      scriptURL = page.script.replace('${version}', page.version);
+    }
+
+    if (/^http(s)?:\/\//.test(scriptURL) === false) {
+      scriptURL = this.siteRoot + scriptURL;
+    }
+
+    return scriptURL;
   }
 }
 

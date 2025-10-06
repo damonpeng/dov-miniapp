@@ -7,6 +7,10 @@ Component({
     },
     properties: {
         router: String,
+        channel: {
+            type: null,
+            value: {},
+        },
         items: {
             type: Array,
             value: [],
@@ -18,11 +22,12 @@ Component({
     },
     data: {
         activeTab: '',
-        activeTabbar: ''
+        activeTabbar: '',
     },
     lifetimes: {
         async ready() {
-            console.log('channel attached', this.data);
+            console.log(`[channel][attached] ${this.data.channel.title}`, this.data);
+            console.log('app.dov.data', app.dov.data);
             const { path, query } = wx.getLaunchOptionsSync();
             if (query && (query.tab || query.tabbar)) {
                 if (query.tabbar) {
@@ -45,7 +50,7 @@ Component({
                 'tab': this.data.activeTab,
                 'query': ''
             });
-            console.info(`tabbar=${query.tabbar}&tab=${query.tab}`);
+            (query.tabbar || query.tab) && console.log(`tabbar=${query.tabbar}&tab=${query.tab}`);
         }
     },
     relations: {},

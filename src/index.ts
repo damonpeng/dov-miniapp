@@ -10,10 +10,12 @@ interface StartPageOptions {
 class Dov {
   manifest: Manifest;
   manifestURL: string;
+  siteRoot: string;
 
-  constructor(manifestURL: string) {
-    this.manifest = new Manifest();
+  constructor(manifestURL: string, siteRoot: string) {
+    this.manifest = new Manifest(siteRoot);
     this.manifestURL = manifestURL;
+    this.siteRoot = siteRoot;
   }
 
   /**
@@ -29,11 +31,14 @@ class Dov {
    */
   async parseDataByRouter(router: string) {
     const script = this.manifest.getPageScriptURL(router);
+    let result = null;
 
     if (script) {
       const response: any = await http.get(script);
-      this.manifest.parse(response);
+      result = this.manifest.parse(response);
     }
+
+    return result;
   }
 
   /**
@@ -53,25 +58,6 @@ class Dov {
       audioContext.play();
     }
   }
-
-  /**
-   * Open url
-   * @param url 
-   */
-  // openUrl(url: string) {
-  //   if (/^weapp:\/\//.test(url)) {
-  //     const [ignore, appId, path] = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
-
-  //     wx.navigateToMiniProgram({
-  //       appId,
-  //       path
-  //     })
-  //   } else if (/#小程序:\/\//.test(url)) {
-  //     wx.navigateToMiniProgram({
-  //       shortLink: url
-  //     });
-  //   }
-  // }
 
   parsePageSettings(pageConfig: any) {
     if (pageConfig?.settings) {

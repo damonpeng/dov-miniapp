@@ -20,12 +20,16 @@ Component({
     instance: null
   },
 
+  attached() {
+    console.log('this.data.component', this.data.component)
+  },
+
   methods: {
-    onClickItem(event: any) {
+    async onClickGridItem(event: any) {
       const url = event.target.dataset.link;
 
       if (url) {
-        app.dov.openUrl(url);
+        await app.dov.openUrl(url);
       }
     }
   }

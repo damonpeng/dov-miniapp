@@ -18,11 +18,14 @@ Component({
     data: {
         instance: null
     },
+    attached() {
+        console.log('this.data.component', this.data.component);
+    },
     methods: {
-        onClickItem(event) {
+        async onClickGridItem(event) {
             const url = event.target.dataset.link;
             if (url) {
-                app.dov.openUrl(url);
+                await app.dov.openUrl(url);
             }
         }
     }

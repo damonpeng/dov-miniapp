@@ -1,3 +1,5 @@
+import { ManifestNode } from "src/core/manifest";
+
 const StorageKey = 'dov-player';
 
 enum PlayerStatus {
@@ -129,7 +131,7 @@ Component({
       let nextItem = this.data.current;
 
       this.properties.items.forEach((item, index) => {
-        if (item.audio === this.data.current.audio) {
+        if ((item as ManifestNode).audio === this.data.current.audio) {
           nextItem = this.properties.items[(index + 1) % this.properties.items.length]
         }
       });

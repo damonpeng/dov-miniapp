@@ -1,6 +1,6 @@
 {
   "name": "dov-miniapp",
-  "version": "1.1.21",
+  "version": "1.1.22",
   "description": "基于JSON配置的小程序静态化框架",
   "keywords": [],
   "author": "damo",
@@ -9,17 +9,22 @@
     "dist"
   ],
   "scripts": {
-    "dev": "npx tsc --watch && npm run copyfiles",
+    "dev": "concurrently \"npm run watch-ts\" \"npm run watch-assets\"",
+    "watch-ts": "npx tsc --watch",
+    "watch-assets": "nodemon",
     "build": "npx tsc && npm run copyfiles",
-    "copyfiles": "copyfiles -u 1 src/*.wxml src/*.wxss src/*.json src/*.js src/**/*.wxml src/**/*.wxss src/**/*.json src/**/*.js src/**/**/*.wxml src/**/**/*.wxss src/**/**/*.json src/**/**/*.js dist/"
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "copyfiles": "copyfiles -u 1 'src/**/*.{wxml,wxss,json,js}' dist/"
   },
   "dependencies": {
-    "@vant/weapp": "^1.11.5",
-    "dov-miniapp": "^1.1.21"
+    "@vant/weapp": "^1.11.5"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "copyfiles": "^2.4.1",
-    "miniprogram-api-typings": "^2.8.3-1",
+    "miniprogram-api-typings": "^4.0.5",
+    "nodemon": "^3.1.9",
     "typescript": "^5.7.2"
   },
   "miniprogram": "dist",

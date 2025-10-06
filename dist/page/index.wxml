@@ -1,3 +1,5 @@
+<debug site="{{site}}" data="{{page}}" />
+
 <view class="dov-page">
   <slot />
 

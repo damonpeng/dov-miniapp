@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "strictNullChecks": true,
+    "skipLibCheck": true,
     "noImplicitAny": true,
     "module": "CommonJS",
     "target": "ES2020",
@@ -19,12 +20,19 @@
     "strictPropertyInitialization": true,
     "typeRoots": [
       "./typings"
-		],
+    ],
+    "types": [
+      "miniprogram-api-typings"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@vant/weapp/*": ["node_modules/@vant/weapp/dist/*"]
+      "@vant/weapp/*": [
+        "node_modules/@vant/weapp/dist/*"
+      ]
     },
-    "lib": ["es2017"],
+    "lib": [
+      "es2017"
+    ],
     "resolveJsonModule": true
   },
   "include": [

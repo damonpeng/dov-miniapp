@@ -10,11 +10,15 @@ Component({
       value: [],
     },
     page: {
-      type: Object,
+      type: null,
+      value: {},
+    },
+    pagelets: {
+      type: null,
       value: {},
     },
     site: {
-      type: Object,
+      type: null,
       value: {},
     }
   },
@@ -25,7 +29,7 @@ Component({
 
   lifetimes: {
     ready() {
-      console.log('page attached', this.data);
+      console.log(`[page][attached] ${this.data.page.title}`, this.data);
     }
   },
 

@@ -1,6 +1,11 @@
 {
   "component": true,
   "usingComponents": {
-    "van-button": "@vant/weapp/button/index"
+    "debug": "../debug/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-button": "@vant/weapp/button/index",
+    "van-popup": "@vant/weapp/popup/index"
   }
 }

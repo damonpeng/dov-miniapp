@@ -1,4 +1,6 @@
 <block wx:for="{{items}}" wx:key="router" wx:if="{{ item.struct==='component' }}">
+  <debug site="{{site}}" data="{{item}}" />
+
   <block wx:if="{{item.type==='player'}}">
     <player items="{{item.items}}" component="{{item}}" module="{{module}}" />
   </block>
@@ -28,6 +30,6 @@
   </block>
 
   <block wx:else>
-    Not supported component "{{component.type}}".
+    [dov/components/index.wxml]Not supported component "{{component.type}}".
   </block>
 </block>

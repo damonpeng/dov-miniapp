@@ -24,11 +24,17 @@ class Dov {
      * @param pageName page name
      */
     async parseDataByRouter(router) {
-        const script = this.manifest.getPageScriptURL(router);
         let result = null;
-        if (script) {
-            const response = await request_1.default.get(script);
-            result = this.manifest.parse(response);
+        const page = this.manifest.getPage(router);
+        if (page && page.items) {
+            result = page;
+        }
+        else {
+            const script = this.manifest.getPageScriptURL(router);
+            if (script) {
+                const response = await request_1.default.get(script);
+                result = this.manifest.parse(response);
+            }
         }
         return result;
     }

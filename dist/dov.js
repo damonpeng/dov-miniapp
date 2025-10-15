@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fontface_1 = __importDefault(require("./core/fontface"));
+const util_1 = __importDefault(require("./util"));
 const app = getApp();
 Component({
     options: {
@@ -19,7 +20,6 @@ Component({
         // site: null,
         // channel: null,
         // page: null,
-        // module: null
     },
     // 组件数据字段监听器，用于监听 properties 和 data 的变化
     observers: {},
@@ -34,7 +34,6 @@ Component({
                 const pageData = dov.manifest.getPage(router);
                 this.setData({
                     page: pageData,
-                    module: dov.manifest.getModule(router)
                 });
                 dov.parsePageSettings(pageData);
             };
@@ -43,11 +42,10 @@ Component({
                 const channel = dov.manifest.getChannel(router);
                 this.setData({
                     channel,
-                    page: undefined,
-                    module: undefined
                 });
                 // load the first page as default.
-                await dov.setPageData(channel.items[0].router);
+                const queryParams = util_1.default.parseCurrentURL();
+                await dov.setPageData(queryParams.page || channel.items[0].router);
             };
             // allow other components to set pagelet data here.
             dov.setPageletData = async (script) => {
@@ -63,7 +61,7 @@ Component({
              * Open url
              * @param url
              */
-            dov.openURL = dov.openUrl = async (url) => {
+            dov.openURL = dov.openUrl = async (url, pagelet) => {
                 // dov internal route, dov://pagelet
                 if (url.startsWith('dov:')) {
                     const targetURI = url.split('#');
@@ -71,6 +69,7 @@ Component({
                     switch (action) {
                         case 'pagelet':
                             await app.dov.setPageletData(targetURI[1]);
+                            app.dov.data.currentPagelet = pagelet || '';
                             break;
                         default:
                             console.error('Invalid openUrl', url);
@@ -104,16 +103,16 @@ Component({
         },
         async attached() {
             const dov = app.dov;
-            const { router } = this.data;
+            const currentURL = util_1.default.parseCurrentURL();
+            const pageRouter = currentURL.page;
+            const channelRouter = this.data.router;
             // init framework data
             await dov.setupManifest();
-            // @todo 优先取本地有效期内的配置，并异步更新远程配置
+            // @todo 支持离线，优先取本地有效期内的配置，并异步更新远程配置
             const { fontface } = dov.manifest.site?.settings;
             if (fontface) {
                 new fontface_1.default(fontface);
             }
-            // get page data
-            const pageData = await dov.parseDataByRouter(router);
             const site = dov.manifest.getSite();
             const styleSettings = site?.settings?.style;
             const fontSettings = site?.settings?.fontface;
@@ -129,38 +128,41 @@ Component({
                 styles.push(`font-family:${fontSettings.family || ''}, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif`);
             }
             const data = {
-                router,
                 site,
-                channel: dov.manifest.getChannel(router),
-                page: dov.manifest.getPage(router),
-                module: dov.manifest.getModule(router),
+                channel: dov.manifest.getChannel(channelRouter),
+                page: {},
                 style: styles.join(';') || ''
             };
+            // get page data
+            let pageManifest = '';
+            let firstPageRouter = '';
+            data.channel.items.forEach((page) => {
+                !firstPageRouter && (firstPageRouter = page.router || '');
+                if (page.router === pageRouter) {
+                    pageManifest = page.script || '';
+                }
+            });
+            data.page = await dov.parseDataByRouter(pageRouter || firstPageRouter);
+            // 非默认路由，重新指向下
+            pageRouter && dov.setPageData(pageRouter);
             console.log(`[Manifest]`, JSON.stringify(data, null, 2));
             // 渲染主页面
             this.setData(data);
             // 判断是否还需要通过url传递的路由，渲染子页面
-            const { path, query } = wx.getLaunchOptionsSync();
-            if (query.router) {
-                const urlParts = query.router.split('#');
+            const queryParams = util_1.default.parseCurrentURL();
+            if (queryParams.pagelet) {
                 let targetURL = '';
-                switch (urlParts[0]) {
-                    case 'pagelet':
-                        // 遍历匹配manifest配置里的路由，找到对应link
-                        data.page.items.forEach((item) => {
-                            item.items.forEach(subitem => {
-                                subitem.items.forEach((thirdItem) => {
-                                    if (thirdItem.router === urlParts[1]) {
-                                        targetURL = thirdItem.link;
-                                    }
-                                });
-                            });
+                // 遍历匹配manifest配置里的路由，找到对应link
+                data.page.items.forEach((item) => {
+                    item.items.forEach(subitem => {
+                        subitem.items.forEach((thirdItem) => {
+                            if (thirdItem.router === queryParams.pagelet) {
+                                targetURL = thirdItem.link;
+                            }
                         });
-                        dov.openURL(targetURL);
-                        break;
-                    default:
-                        console.error(`[dov]unsupported query router: ${query.router}`);
-                }
+                    });
+                });
+                dov.openURL(targetURL, queryParams.pagelet);
             }
         },
         // 在组件在视图层布局完成后执行
@@ -182,6 +184,7 @@ Component({
                     pageletData: {},
                 });
             }, 300);
+            app.dov.data.currentPagelet = '';
         },
     }
 });

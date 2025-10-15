@@ -1,4 +1,4 @@
-export {}
+export { }
 
 const app = getApp();
 
@@ -12,10 +12,10 @@ function getShareInfo(shareType: ShareType) {
   const settings = app.dov.data.page.settings?.shareInfo || app.dov.data.site.settings?.shareInfo;
   if (!settings) return undefined;
 
-  const { site, channel, page, activeTab, activeTabbar } = app.dov.data;
+  const { site, channel, page, currentChannel = '', currentPage = '', currentPagelet = '' } = app.dov.data;
 
   const title = settings['title'].replace('${default}', page.title ? `${channel.title}•${page.title}` : (site.title));
-  const queryData = `tabbar=${activeTabbar}&tab=${activeTab}`;
+  const queryData = `channel=${currentChannel}&page=${currentPage}&pagelet=${currentPagelet}`;
   const imageUrl = settings['image'].replace('${default}', '').replace('${logo}', site.icon || '');
 
   let shareInfo;

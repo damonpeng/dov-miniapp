@@ -21,36 +21,38 @@ Component({
         }
     },
     data: {
-        activeTab: '',
-        activeTabbar: '',
+        currentPage: '',
+        currentChannel: '',
     },
     lifetimes: {
         async ready() {
             console.log(`[channel][attached] ${this.data.channel.title}`, this.data);
             console.log('app.dov.data', app.dov.data);
             const { path, query } = wx.getLaunchOptionsSync();
-            if (query && (query.tab || query.tabbar)) {
-                if (query.tabbar) {
-                    this.updateCurrentTabbar(query.tabbar);
-                    await app.dov.setChannelData(query.tabbar);
+            let currentChannel = '', currentPage = '';
+            if (query && (query.channel || query.page)) {
+                if (query.channel) {
+                    currentChannel = query.channel;
+                    app.dov.setChannelData(currentChannel);
                 }
-                if (query.tab) {
-                    app.dov.setPageData(query.tab);
-                    this.updateCurrentTab(query.tab);
+                if (query.page) {
+                    currentPage = query.page;
+                }
+                else {
+                    currentPage = this.data.channel.items[0].router;
                 }
             }
             else {
-                const defaultRouter = this.data.items[0].router;
-                this.updateCurrentTabbar();
-                app.dov.setPageData(defaultRouter);
-                this.updateCurrentTab(defaultRouter);
+                currentPage = this.data.items[0].router; // ???
             }
+            this.updateCurrentTabbar(currentChannel);
+            app.dov.setPageData(currentPage);
+            this.updateCurrentTab(currentPage);
             wx.reportEvent('exposure', {
-                'tabbar': this.data.activeTabbar,
-                'tab': this.data.activeTab,
+                'channel': this.data.currentChannel,
+                'page': this.data.currentPage,
                 'query': ''
             });
-            (query.tabbar || query.tab) && console.log(`tabbar=${query.tabbar}&tab=${query.tab}`);
         }
     },
     relations: {},
@@ -61,55 +63,62 @@ Component({
             app.dov.setPageData(router);
             this.updateCurrentTab(router);
             wx.reportEvent('exposure', {
-                'tabbar': this.data.activeTabbar,
-                'tab': this.data.activeTab,
+                'channel': this.data.currentChannel,
+                'page': this.data.currentPage,
                 'query': ''
             });
         },
         // switch tabbar
         async onChangeTabbar(event) {
+            // 设置一级tab
             const router = event.detail;
             this.updateCurrentTabbar(router);
             await app.dov.setChannelData(router);
-            this.updateCurrentTab();
+            // 设置二级tab
+            const pageRouter = this.getFirstPageRouter();
+            app.dov.setPageData(pageRouter);
+            this.updateCurrentTab(pageRouter);
             wx.reportEvent('exposure', {
-                'tabbar': this.data.activeTabbar,
-                'tab': this.data.activeTab,
+                'channel': this.data.currentChannel,
+                'page': this.data.currentPage,
                 'query': ''
             });
         },
         // hight current tab
         updateCurrentTab(router) {
-            let activeTab = '';
+            let currentPage = '';
             if (router) {
-                activeTab = router;
+                currentPage = router;
             }
             else {
                 // set the first page
-                activeTab = this.data.items[0].router;
+                currentPage = this.getFirstPageRouter();
             }
             this.setData({
-                activeTab
+                currentPage
             });
-            app.dov.data.activeTab = activeTab;
+            app.dov.data.currentPage = currentPage;
         },
         // hight current tabbar
         updateCurrentTabbar(router) {
-            let activeTabbar = '';
+            let currentChannel = '';
             // reset tab first, to avoid white screen.
             this.setData({
-                activeTab: ''
+                currentPage: ''
             });
             if (router) {
-                activeTabbar = router;
+                currentChannel = router;
             }
             else {
-                activeTabbar = this.data.router;
+                currentChannel = this.data.router;
             }
             this.setData({
-                activeTabbar
+                currentChannel
             });
-            app.dov.data.activeTabbar = activeTabbar;
+            app.dov.data.currentChannel = currentChannel;
+        },
+        getFirstPageRouter() {
+            return this.data.channel.items[0].router || '';
         }
     }
 });

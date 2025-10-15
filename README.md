@@ -128,7 +128,12 @@
 相关资源：
 * 支持的图标库：https://www.iconfont.cn/collections/detail?cid=31945
 * 本地开发：`npm run dev`，改动后在小程序开发者工具构建npm
-* 指定路由访问：`pages/dov?router=pagelet#/wood/hongmu/tanxiangzitan`
+
+路由结构：
+* path：都是 `pages/dov`，参数内置有channel、page、pagelet三个页面路由层级
+* channel：底部一级导航
+* page：顶部二级导航，如 channel=/watching&page=/watching/documentary",
+* pagelet：半屏页面，如 pagelet=/wood/hongmu/tanxiangzitan
 
 ## 致谢
 

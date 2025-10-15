@@ -30,12 +30,17 @@ class Dov {
    * @param pageName page name
    */
   async parseDataByRouter(router: string) {
-    const script = this.manifest.getPageScriptURL(router);
     let result = null;
+    const page = this.manifest.getPage(router);
 
-    if (script) {
-      const response: any = await http.get(script);
-      result = this.manifest.parse(response);
+    if (page && page.items) {
+      result = page;
+    } else {
+      const script = this.manifest.getPageScriptURL(router);
+      if (script) {
+        const response: any = await http.get(script);
+        result = this.manifest.parse(response);
+      }
     }
 
     return result;

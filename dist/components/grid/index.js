@@ -23,9 +23,9 @@ Component({
     },
     methods: {
         async onClickGridItem(event) {
-            const url = event.target.dataset.link;
-            if (url) {
-                await app.dov.openUrl(url);
+            const { link, router } = event.target.dataset;
+            if (link || router) {
+                await app.dov.openURL(link, router);
             }
         }
     }

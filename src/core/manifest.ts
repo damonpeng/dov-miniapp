@@ -174,9 +174,9 @@ class Manifest {
    * @param moduleRouter module name, default returns the first one.
    * @returns
    */
-  getModule(router: string) {
-    return this.getByRouter(ManifestNodeType.Module, router);
-  }
+  // getModule(router: string) {
+  //   return this.getByRouter(ManifestNodeType.Module, router);
+  // }
 
   /**
    * Get components of a page.
@@ -184,18 +184,18 @@ class Manifest {
    * @param pageRouter page name, default returns the first page.
    * @returns
    */
-  getComponentsOfPage(pageRouter: string, moduleRouter: string) {
-    return this.componentOfPageMap[pageRouter][moduleRouter];
-  }
+  // getComponentsOfPage(pageRouter: string, moduleRouter: string) {
+  //   return this.componentOfPageMap[pageRouter][moduleRouter];
+  // }
 
   /**
    * Get pagelets of a page.
    * @param pageRouter page name, default returns the first page.
    * @returns
    */
-  getPageletsOfPage(pageRouter: string) {
-    return this.pageletOfPageMap[pageRouter];
-  }
+  // getPageletsOfPage(pageRouter: string) {
+  //   return this.pageletOfPageMap[pageRouter];
+  // }
 
   /**
    * Get URL of the page json data file

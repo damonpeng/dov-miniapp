@@ -1,4 +1,5 @@
 import FontFace from './core/fontface';
+import util from './util';
 
 const app = getApp();
 
@@ -18,7 +19,6 @@ Component({
     // site: null,
     // channel: null,
     // page: null,
-    // module: null
   },
 
   // 组件数据字段监听器，用于监听 properties 和 data 的变化
@@ -41,7 +41,6 @@ Component({
 
         this.setData({
           page: pageData,
-          module: dov.manifest.getModule(router)
         });
 
         dov.parsePageSettings(pageData);
@@ -54,12 +53,11 @@ Component({
 
         this.setData({
           channel,
-          page: undefined,
-          module: undefined
         });
 
         // load the first page as default.
-        await dov.setPageData(channel.items[0].router);
+        const queryParams = util.parseCurrentURL();
+        await dov.setPageData(queryParams.page || channel.items[0].router);
       };
 
       // allow other components to set pagelet data here.
@@ -78,7 +76,7 @@ Component({
        * Open url
        * @param url 
        */
-      dov.openURL = dov.openUrl = async (url: string) => {
+      dov.openURL = dov.openUrl = async (url: string, pagelet: string) => {
         // dov internal route, dov://pagelet
         if (url.startsWith('dov:')) {
           const targetURI = url.split('#');
@@ -87,6 +85,7 @@ Component({
           switch (action) {
             case 'pagelet':
               await app.dov.setPageletData(targetURI[1]);
+              app.dov.data.currentPagelet = pagelet || '';
               break;
             default:
               console.error('Invalid openUrl', url);
@@ -119,20 +118,19 @@ Component({
 
     async attached() {
       const dov = app.dov;
-      const { router } = this.data;
+      const currentURL = util.parseCurrentURL();
+      const pageRouter = currentURL.page;
+      const channelRouter = this.data.router;
 
       // init framework data
       await dov.setupManifest();
 
-      // @todo 优先取本地有效期内的配置，并异步更新远程配置
+      // @todo 支持离线，优先取本地有效期内的配置，并异步更新远程配置
 
       const { fontface } = dov.manifest.site?.settings;
       if (fontface) {
         new FontFace(fontface);
       }
-
-      // get page data
-      const pageData = await dov.parseDataByRouter(router);
 
       const site = dov.manifest.getSite();
       const styleSettings = site?.settings?.style;
@@ -152,44 +150,49 @@ Component({
       }
 
       const data = {
-        router,
         site,
-        channel: dov.manifest.getChannel(router),
-        page: dov.manifest.getPage(router),
-        module: dov.manifest.getModule(router),
+        channel: dov.manifest.getChannel(channelRouter),
+        page: {},
         style: styles.join(';') || ''
       };
+
+      // get page data
+      let pageManifest: string = '';
+      let firstPageRouter: string = '';
+      data.channel.items.forEach((page: { router?: string; script?: string; }) => {
+        !firstPageRouter && (firstPageRouter = page.router || '');
+        if (page.router === pageRouter) {
+          pageManifest = page.script || '';
+        }
+      });
+      data.page = await dov.parseDataByRouter(pageRouter || firstPageRouter);
+
+      // 非默认路由，重新指向下
+      pageRouter && dov.setPageData(pageRouter);
+
       console.log(`[Manifest]`, JSON.stringify(data, null, 2));
 
       // 渲染主页面
       this.setData(data);
 
       // 判断是否还需要通过url传递的路由，渲染子页面
-      const { path, query } = wx.getLaunchOptionsSync();
+      const queryParams = util.parseCurrentURL();
 
-      if (query.router) {
-        const urlParts = query.router.split('#');
+      if (queryParams.pagelet) {
         let targetURL = '';
 
-        switch (urlParts[0]) {
-          case 'pagelet':
-            // 遍历匹配manifest配置里的路由，找到对应link
-            data.page.items.forEach((item: { items: any[]; }) => {
-              item.items.forEach(subitem => {
-                subitem.items.forEach((thirdItem: { router: string; link: string; }) => {
-                  if (thirdItem.router === urlParts[1]) {
-                    targetURL = thirdItem.link;
-                  }
-                });
-              });
+        // 遍历匹配manifest配置里的路由，找到对应link
+        data.page.items.forEach((item: { items: any[]; }) => {
+          item.items.forEach(subitem => {
+            subitem.items.forEach((thirdItem: { router: string; link: string; }) => {
+              if (thirdItem.router === queryParams.pagelet) {
+                targetURL = thirdItem.link;
+              }
             });
+          });
+        });
 
-            dov.openURL(targetURL);
-            break;
-
-          default:
-            console.error(`[dov]unsupported query router: ${query.router}`);
-        }
+        dov.openURL(targetURL, queryParams.pagelet);
       }
     },
 
@@ -218,6 +221,8 @@ Component({
           pageletData: {},
         });
       }, 300);
+
+      app.dov.data.currentPagelet = '';
     },
   }
 });

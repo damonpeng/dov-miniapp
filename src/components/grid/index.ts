@@ -26,10 +26,10 @@ Component({
 
   methods: {
     async onClickGridItem(event: any) {
-      const url = event.target.dataset.link;
+      const { link, router } = event.target.dataset;
 
-      if (url) {
-        await app.dov.openUrl(url);
+      if (link || router) {
+        await app.dov.openURL(link, router);
       }
     }
   }

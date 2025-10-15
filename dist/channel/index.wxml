@@ -1,7 +1,7 @@
 <debug site="{{site}}" data="{{channel}}" />
 
 <block wx:if="{{items.length>1}}">
-  <van-tabs id="dov-tabs" sticky animated swipeable wx:if="{{activeTab}}" active="{{activeTab}}" bind:change="onChangeTab">
+  <van-tabs id="dov-tabs" sticky animated swipeable wx:if="{{currentPage}}" active="{{currentPage}}" bind:change="onChangeTab">
     <van-tab wx:for="{{items}}" wx:key="router" title="{{item.title}}" name="{{item.router}}">
       <slot name="{{item.router}}" />
     </van-tab>
@@ -19,7 +19,7 @@
 
 <van-tabbar
   wx:if="{{site.items.length}}"
-  active="{{ activeTabbar }}"
+  active="{{ currentChannel }}"
   active-color="{{site.settings.style['--tabbar-item-active-color']}}"
   inactive-color="{{site.settings.style['--tabbar-item-text-color']}}"
   placeholder="{{true}}"

@@ -44,8 +44,20 @@ Component({
     },
 
     onClickImage(event: any) {
+      let urls: string[] = [];
+
+      if (this.data.images.length > 0) {
+        if (typeof this.data.images[0] === 'string') {
+          urls = this.data.images;
+        } else {
+          this.data.images.forEach((item: any) => {
+            urls.push(item.url);
+          });
+        }
+      }
+
       wx.previewImage({
-        urls: this.data.images,
+        urls,
         current: event.detail.src
       });
     },

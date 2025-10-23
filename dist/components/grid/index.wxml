@@ -1,7 +1,7 @@
-<van-grid clickable="{{true}}" column-num="{{component.settings['column-num'] || 4}}" custom-class="dov-grid" gutter="{{component.settings.gutter}}" border="{{component.settings.border}}">
+<van-grid clickable="{{true}}" column-num="{{component.settings['column-num'] || 3}}" custom-class="dov-grid" gutter="{{component.settings.gutter}}" border="{{component.settings.border}}">
   <van-grid-item use-slot wx:for="{{items}}" text="{{item.title}}" wx:key="title" bind:click="onClickGridItem" data-link="{{item.link||''}}" data-router="{{item.router}}" style="positison:relative">
     <view style="position:relative" wx:if="{{item.poster}}">
-      <van-image round="{{component.settings.round}}" lazy-load width="{{component.settings.width||60}}" height="{{component.settings.height||60}}" fit="cover" src="{{item.poster}}" />
+      <van-image round="{{component.settings.round}}" image-class="dov-grid__image" lazy-load width="{{component.settings.width||60}}" height="{{component.settings.height||60}}" fit="cover" src="{{item.poster}}" />
     </view>
     <view class="dov-grid__title">{{ item.title }}</view>
     <view wx:if="{{item.desc}}" class="dov-grid__desc">{{ item.desc }}</view>

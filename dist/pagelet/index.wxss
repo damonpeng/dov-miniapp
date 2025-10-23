@@ -4,11 +4,19 @@
 .dov-pagelet__title {
   font-size: 120%;
   font-weight: 700;
-  margin: 10px;
+  margin: 50px 10px 10px;
 }
 .dov-pagelet__content {
   margin: 10px;
 }
 .dov-pagelet__section {
   margin-bottom: 15px;
+}
+.dov-swiper-item__title {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    text-align: center;
+    background: rgba(221, 221, 221, 0.4);
+    padding: 5px 0;
 }

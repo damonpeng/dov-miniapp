@@ -130,7 +130,9 @@ Component({
             const data = {
                 site,
                 channel: dov.manifest.getChannel(channelRouter),
-                page: {},
+                page: {
+                    items: []
+                },
                 style: styles.join(';') || ''
             };
             // get page data

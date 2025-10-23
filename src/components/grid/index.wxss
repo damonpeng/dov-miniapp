@@ -10,3 +10,6 @@
   text-align: center;
   color: var(--dov-grid__desc-color, #777);
 }
+.dov-grid__image {
+  scale: 1.1;
+}

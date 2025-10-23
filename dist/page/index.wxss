@@ -2,3 +2,9 @@
   width: 100%;
   /*height: 100vh;*/
 }
+.dov-page__desc {
+  color: var(--dov-grid__desc-color, #777);
+  padding: 5px 10px;
+  background: #eee;
+  font-size: 12px;
+}

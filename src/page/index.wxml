@@ -1,6 +1,7 @@
 <debug site="{{site}}" data="{{page}}" />
 
 <view class="dov-page">
+  <view wx:if="{{page.desc}}" class="dov-page__desc">{{page.desc}}</view>
   <slot />
 
   <view wx:if="{{site.plugins && site.plugins.txc && site.plugins.txc.productId}}" style="text-align:center;width:100%;margin:20px 0 10px;">

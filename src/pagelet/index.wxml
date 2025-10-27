@@ -1,11 +1,16 @@
 <van-popup round
   closeable close-icon="close" close-icon-position="top-left"
+  lock-scroll="{{true}}"
+  root-porta="{{true}}"
   show="{{isShow}}"
   position="bottom"
   custom-style="height: 90%"
   bind:close="onClose"
 >
-  <swiper wx:if="{{images&&images.length>0}}" indicator-dots="{{true}}" indicator-type="worm" transformer-type="scaleAndFade" easing-function="" bindchange="" style="height:420px">
+  <button open-type="share" plain="{{true}}" class="dov-pagelet__share">
+    <van-icon name="share-o" size="20px" bind:click="onShare" />
+  </button>
+  <swiper wx:if="{{images&&images.length>0}}" indicator-dots="{{true}}" indicator-type="worm" transformer-type="scaleAndFade" easing-function="" bindchange="" style="height:420px;">
     <block wx:for="{{images}}" wx:key="*this">
       <swiper-item>
         <view class="swiper-item">
@@ -18,9 +23,9 @@
   <van-row>
     <van-col span="20"><view wx:if="{{title}}" class="dov-pagelet__title">{{title}}</view></van-col>
     <van-col span="4">
-      <button open-type="share" plain="{{true}}" style="border:none">
+      <!--button open-type="share" plain="{{true}}" style="border:none">
         <van-icon name="share-o" size="20px" bind:click="onShare" />
-      </button>
+      </button-->
     </van-col>
   </van-row>
   <view wx:if="{{texts}}" class="dov-pagelet__content">

@@ -7,7 +7,7 @@
   custom-style="height: 90%"
   bind:close="onClose"
 >
-  <button open-type="share" plain="{{true}}" class="dov-pagelet__share">
+  <button open-type="share" plain="{{true}}" class="dov-pagelet__share" bind:click="onClickShare">
     <van-icon name="share-o" size="20px" bind:click="onShare" />
   </button>
   <swiper wx:if="{{images&&images.length>0}}" indicator-dots="{{true}}" indicator-type="worm" transformer-type="scaleAndFade" easing-function="" bindchange="" style="height:420px;">

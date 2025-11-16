@@ -30,6 +30,13 @@ Component({
 
     ready() {
       console.log(`[pagelet][attached]`, this.data);
+
+      // 设置分享数据
+      const app = getApp();
+      app.dov.data.currentShareData = {
+        title: this.data.title || '',
+        imageUrl: typeof this.data.images[0] === 'string' ? this.data.images[0] : this.data.images[0].url || '',
+      };
       this.setData({ isShow: true })
     }
   },
@@ -39,6 +46,10 @@ Component({
 
   methods: {
     onClose() {
+      const app = getApp();
+
+      // 清空分享数据
+      app.dov.data.currentShareData = null;
       this.setData({ isShow: false })
       this.triggerEvent('closePagelet');
     },
@@ -62,9 +73,6 @@ Component({
       });
     },
 
-    onShare() {
-      // @todo 指定分享内容
-    },
     /**
     onClickDownload(event: any) {
       const imageSrc = event.currentTarget.dataset.src,

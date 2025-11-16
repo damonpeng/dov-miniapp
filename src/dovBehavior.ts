@@ -14,9 +14,17 @@ function getShareInfo(shareType: ShareType) {
 
   const { site, channel, page, currentChannel = '', currentPage = '', currentPagelet = '' } = app.dov.data;
 
-  const title = settings['title'].replace('${default}', page.title ? `${channel.title}•${page.title}` : (site.title));
   const queryData = `channel=${currentChannel}&page=${currentPage}&pagelet=${currentPagelet}`;
-  const imageUrl = settings['image'].replace('${default}', '').replace('${logo}', site.icon || '');
+  let title = settings['title'].replace('${default}', page.title ? `${channel.title}•${page.title}` : (site.title));
+  let imageUrl = settings['image'].replace('${default}', '').replace('${logo}', site.icon || '');
+
+  // 优先使用页面的分享信息 app.data.currentShareData
+  if (app.dov.data.currentShareData?.title) {
+    title = app.dov.data.currentShareData.title;
+  }
+  if (app.dov.data.currentShareData?.imageUrl) {
+    imageUrl = app.dov.data.currentShareData.imageUrl;
+  }
 
   let shareInfo;
   switch (shareType) {
@@ -47,6 +55,7 @@ function getShareInfo(shareType: ShareType) {
   return shareInfo;
 }
 
+// https://developers.weixin.qq.com/miniprogram/dev/reference/api/Behavior.html
 module.exports = Behavior({
   methods: {
     onShareAppMessage() {

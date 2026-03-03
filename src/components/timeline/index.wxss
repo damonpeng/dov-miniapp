@@ -1,0 +1,467 @@
+.timeline {
+  padding: 20rpx;
+}
+
+.timeline-item {
+  display: flex;
+  position: relative;
+  margin-bottom: 32rpx;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 时间轴节点 */
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 24rpx;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.timeline-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* 可点击样式 */
+.timeline-dot.clickable {
+  cursor: pointer;
+}
+
+.timeline-dot.clickable:active {
+  transform: scale(1.1);
+}
+
+.timeline-dot.completed {
+  background-color: #10b981;
+  color:  #10b981;
+}
+
+.timeline-dot.completed.clickable:active {
+  background-color: #059669;
+}
+
+.timeline-dot.ongoing {
+  background-color: #f97316;
+  color: #f97316;
+  animation: pulse 2s infinite;
+}
+
+.timeline-dot.ongoing.clickable:active {
+  background-color: #ea580c;
+}
+
+.timeline-dot.pending {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+}
+
+.timeline-dot.pending.clickable:active {
+  background-color: #d1d5db;
+}
+
+/* ongoing状态(部分选中) - 橙色 */
+.timeline-dot.ongoing.has-checked {
+  animation: breathing 2s ease-in-out infinite;
+  background-color: #f97316 !important;
+}
+
+/* completed状态(全部选中) - 绿色，无呼吸效果 */
+.timeline-dot.completed.has-checked {
+  background-color: #10b981 !important;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes breathing {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+    box-shadow: 0 0 6rpx 3rpx rgba(249, 115, 22, 0.4);
+  }
+}
+
+@keyframes breathing-completed {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+    box-shadow: 0 0 6rpx 3rpx rgba(16, 185, 129, 0.4);
+  }
+}
+
+@keyframes breathing-pending {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.7);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.08);
+    box-shadow: 0 0 6rpx 3rpx rgba(249, 115, 22, 0.4);
+  }
+}
+
+.timeline-line {
+  width: 2rpx;
+  flex: 1;
+  background-color: #e5e7eb;
+  margin-top: 8rpx;
+  min-height: 60rpx;
+}
+
+/* 阶段内容 */
+.timeline-content {
+  flex: 1;
+  background-color: #f9fafb;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  transition: all 0.3s ease;
+}
+
+.timeline-item.ongoing .timeline-content {
+  background-color: #eff6ff;
+  border: 2rpx solid #3b82f6;
+  box-shadow: 0 2rpx 8rpx rgba(59, 130, 246, 0.15);
+}
+
+.timeline-item.completed .timeline-content {
+  background-color: #f0fdf4;
+}
+
+.timeline-header {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.timeline-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.timeline-title-container {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex: 1;
+}
+
+.timeline-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.timeline-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  flex-shrink: 0;
+}
+
+.timeline-duration {
+  font-size: 24rpx;
+  color: #6b7280;
+}
+
+.timeline-expand-icon {
+  font-size: 20rpx;
+  color: #9ca3af;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.timeline-expand-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.timeline-meta {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #6b7280;
+  gap: 24rpx;
+}
+
+.timeline-status {
+  font-size: 20rpx;
+  padding: 2rpx 10rpx;
+  border-radius: 10rpx;
+  white-space: nowrap;
+}
+
+.timeline-status.completed {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.timeline-status.ongoing {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.timeline-status.pending {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* 可折叠内容区域 */
+.timeline-collapsible {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.timeline-collapsible.expanded {
+  max-height: 2000rpx;
+}
+
+.timeline-collapsible.collapsed {
+  max-height: 0;
+}
+
+/* 待办事项列表 */
+.timeline-tasks {
+  margin-top: 16rpx;
+  margin-bottom: 16rpx;
+  padding: 16rpx;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 8rpx;
+}
+
+.timeline-item.ongoing .timeline-tasks {
+  background-color: rgba(219, 234, 254, 0.5);
+}
+
+.timeline-item.completed .timeline-tasks {
+  background-color: rgba(209, 250, 229, 0.5);
+}
+
+.timeline-task-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.timeline-task-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-task-item.checked {
+  opacity: 0.5;
+}
+
+.timeline-task-checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #9ca3af;
+  border-radius: 6rpx;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+}
+
+.timeline-task-checkbox.checked {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.timeline-task-check-icon {
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.timeline-task-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: #374151;
+  line-height: 36rpx;
+}
+
+.timeline-task-item.checked .timeline-task-text {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.timeline-item.ongoing .timeline-task-checkbox {
+  border-color: #3b82f6;
+}
+
+.timeline-item.ongoing .timeline-task-checkbox.checked {
+  background-color: #3b82f6;
+}
+
+.timeline-item.completed .timeline-task-checkbox {
+  border-color: #10b981;
+}
+
+.timeline-item.completed .timeline-task-checkbox.checked {
+  background-color: #10b981;
+}
+
+/* 进度条 */
+.timeline-progress {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.timeline-progress-bar {
+  flex: 1;
+  height: 8rpx;
+  background-color: #e5e7eb;
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin-right: 16rpx;
+}
+
+.timeline-progress-fill {
+  height: 100%;
+  background-color: #3b82f6;
+  border-radius: 4rpx;
+  transition: width 0.3s ease;
+}
+
+.timeline-item.completed .timeline-progress-fill {
+  background-color: #10b981;
+}
+
+.timeline-item.pending .timeline-progress-fill {
+  background-color: #9ca3af;
+}
+
+.timeline-progress-text {
+  font-size: 24rpx;
+  color: #6b7280;
+  min-width: 60rpx;
+  text-align: right;
+}
+
+/* 展开提示 */
+.timeline-hint {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 8rpx;
+  margin-top: 8rpx;
+}
+
+.timeline-hint-text {
+  font-size: 20rpx;
+  color: #d1d5db;
+  margin-right: 4rpx;
+}
+
+.timeline-hint-arrow {
+  font-size: 20rpx;
+  color: #d1d5db;
+}
+
+.timeline-item.ongoing .timeline-hint-text,
+.timeline-item.ongoing .timeline-hint-arrow {
+  color: #bfdbfe;
+}
+
+/* 备注区域 */
+.timeline-note-section {
+  margin-top: 16rpx;
+  border-top: 1rpx solid #e5e7eb;
+  padding-top: 12rpx;
+}
+
+.timeline-note-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8rpx 0;
+  cursor: pointer;
+}
+
+.timeline-note-text {
+  font-size: 24rpx;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.timeline-note-arrow {
+  font-size: 35rpx;
+  color: #6b7280;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  font-weight: 300;
+}
+
+.timeline-note-arrow.expanded {
+  transform: rotate(90deg);
+}
+
+.timeline-note-content {
+  margin-top: 12rpx;
+  animation: fadeIn 0.3s ease;
+}
+
+.timeline-note-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  padding: 16rpx;
+  background-color: #ffffff;
+  border: 1rpx solid #e5e7eb;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  line-height: 1.6;
+  color: #374151;
+  box-sizing: border-box;
+}
+
+.timeline-note-textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

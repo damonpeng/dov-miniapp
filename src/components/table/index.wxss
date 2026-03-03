@@ -1,0 +1,139 @@
+.table {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  margin: 0 24rpx 24rpx;
+}
+
+/* 表头 */
+.table__header {
+  display: flex;
+  background: #f5f5f5;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+
+.table__header .table__cell {
+  font-weight: 600;
+  color: #333;
+  font-size: 28rpx;
+}
+
+/* 表格主体 */
+.table__body {
+  background: #fff;
+}
+
+.table__row {
+  display: flex;
+  border-bottom: 2rpx solid #f0f0f0;
+}
+
+.table__row:last-child {
+  border-bottom: none;
+}
+
+/* 单元格 */
+.table__cell {
+  padding: 24rpx 16rpx;
+  font-size: 26rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+  min-height: 88rpx;
+  box-sizing: border-box;
+}
+
+/* 第一列 - 固定宽度 */
+.table__cell--first {
+  width: 160rpx;
+  flex-shrink: 0;
+  font-weight: 500;
+  color: #333;
+  border-right: 2rpx solid #f0f0f0;
+  justify-content: center;
+}
+
+/* 其他列 - 平均分配剩余空间 */
+.table__cell--col {
+  flex: 1;
+  border-right: 2rpx solid #f0f0f0;
+  justify-content: center;
+  text-align: center;
+}
+
+.table__cell--col:last-child {
+  border-right: none;
+}
+
+/* 单元格内容 */
+.table__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  width: 100%;
+}
+
+.table__text {
+  font-size: 26rpx;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* 复选框 */
+.table__checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 3rpx solid #d1d5db;
+  border-radius: 6rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.table__checkbox.checked {
+  background: #333;
+  border-color: #333;
+}
+
+.table__checkbox-icon {
+  color: #fff;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+/* 响应式 - 小屏幕优化 */
+@media (max-width: 375px) {
+  .table__cell {
+    padding: 20rpx 12rpx;
+    font-size: 24rpx;
+  }
+  
+  .table__cell--first {
+    width: 140rpx;
+  }
+  
+  .table__text {
+    font-size: 24rpx;
+  }
+  
+  .table__checkbox {
+    width: 32rpx;
+    height: 32rpx;
+  }
+}
+
+/* 横向滚动支持（如果需要） */
+.table--scrollable {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table--scrollable .table__header,
+.table--scrollable .table__row {
+  min-width: 750rpx;
+}

@@ -28,9 +28,9 @@
       </button-->
     </van-col>
   </van-row>
-  <view wx:if="{{texts}}" class="dov-pagelet__content">
-    <block wx:for="{{texts}}" wx:key="*this">
-      <view class="dov-pagelet__section">{{item}}</view>
+  <view wx:if="{{parsedTexts}}" class="dov-pagelet__content">
+    <block wx:for="{{parsedTexts}}" wx:key="*this">
+      <towxml class="dov-pagelet__section" nodes="{{item}}" />
     </block>
   </view>
 </van-popup>

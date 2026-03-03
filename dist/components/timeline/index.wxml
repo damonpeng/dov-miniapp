@@ -1,0 +1,99 @@
+<wxs module="utils">
+  // 检查某个item是否有选中的task
+  var hasCheckedTask = function(item, taskCheckedStatus) {
+    if (!item.tasks || item.tasks.length === 0) return false;
+    
+    for (var i = 0; i < item.tasks.length; i++) {
+      var key = item.id + '-' + i;
+      if (taskCheckedStatus[key]) {
+        return true;
+      }
+    }
+    return false;
+  };
+  
+  module.exports = {
+    hasCheckedTask: hasCheckedTask
+  };
+</wxs>
+
+<view class="timeline">
+  <view class="timeline-item {{item.status}}" wx:for="{{computedItems}}" wx:key="id" data-id="{{item.id}}">
+    <!-- 时间轴节点 - 可点击切换阶段 -->
+    <view class="timeline-node" catchtap="onStageClick" data-item="{{item}}">
+      <view class="timeline-dot {{item.status}} clickable {{utils.hasCheckedTask(item, taskCheckedStatus) ? 'has-checked' : ''}}">
+        <text wx:if="{{item.status === 'completed'}}" class="timeline-icon">●</text>
+        <text wx:elif="{{item.status === 'ongoing'}}" class="timeline-icon">●</text>
+        <text wx:else class="timeline-icon">○</text>
+      </view>
+      <view wx:if="{{index < computedItems.length - 1}}" class="timeline-line"></view>
+    </view>
+
+    <!-- 阶段内容 -->
+    <view class="timeline-content">
+      <view class="timeline-header" bindtap="toggleExpand" data-id="{{item.id}}">
+        <view class="timeline-title-row">
+          <view class="timeline-title-container">
+            <text class="timeline-title">{{item.title}}</text>
+            <text class="timeline-duration">{{item.duration}}</text>
+          </view>
+          <view class="timeline-header-right">
+            <text wx:if="{{item.status !== '' && item.status !== 'hide'}}" class="timeline-status {{item.status}}">
+              <text wx:if="{{item.status === 'completed'}}">已完成</text>
+              <text wx:elif="{{item.status === 'ongoing'}}">进行中</text>
+              <text wx:else>未开始</text>
+            </text>
+            <text class="timeline-expand-icon {{expandedItems[item.id] ? 'expanded' : ''}}">▼</text>
+          </view>
+        </view>
+        
+        <view class="timeline-meta" wx:if="{{item.startDate && item.endDate}}">
+          <text class="timeline-date">{{item.startDate}} ~ {{item.endDate}}</text>
+        </view>
+      </view>
+
+      <!-- 可折叠的内容区域 -->
+      <view class="timeline-collapsible {{expandedItems[item.id] ? 'expanded' : 'collapsed'}}">
+        <!-- 待办事项列表 -->
+        <view wx:if="{{item.tasks && item.tasks.length > 0}}" class="timeline-tasks">
+          <view 
+            class="timeline-task-item {{taskCheckedStatus[item.id + '-' + taskIndex] ? 'checked' : ''}}" 
+            wx:for="{{item.tasks}}" 
+            wx:for-item="task" 
+            wx:for-index="taskIndex"
+            wx:key="taskIndex"
+            catchtap="onTaskCheckboxChange"
+            data-item-id="{{item.id}}"
+            data-task-index="{{taskIndex}}"
+          >
+            <view class="timeline-task-checkbox {{taskCheckedStatus[item.id + '-' + taskIndex] ? 'checked' : ''}}">
+              <text wx:if="{{taskCheckedStatus[item.id + '-' + taskIndex]}}" class="timeline-task-check-icon">✓</text>
+            </view>
+            <text class="timeline-task-text">{{task}}</text>
+          </view>
+        </view>
+
+        <!-- 备注区域 -->
+        <view class="timeline-note-section">
+          <view class="timeline-note-toggle" catchtap="toggleNote" data-id="{{item.id}}">
+            <text class="timeline-note-text">备注</text>
+            <text class="timeline-note-arrow {{noteExpanded[item.id] ? 'expanded' : ''}}">›</text>
+          </view>
+          
+          <view wx:if="{{noteExpanded[item.id]}}" class="timeline-note-content">
+            <textarea 
+              class="timeline-note-textarea"
+              placeholder="添加备注信息..."
+              value="{{itemNotes[item.id] || ''}}"
+              bindinput="onNoteInput"
+              bindblur="onNoteBlur"
+              data-id="{{item.id}}"
+              auto-height
+              maxlength="-1"
+            />
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

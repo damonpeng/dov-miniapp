@@ -1,0 +1,50 @@
+<view class="table" wx:for="{{items}}" wx:key="title">
+  <!-- 表头 -->
+  <view class="table__header">
+    <view class="table__cell table__cell--first" wx:if="{{item.headers && item.headers.length > 0}}">
+      {{item.headers[0]}}
+    </view>
+    <view class="table__cell table__cell--col" 
+          wx:for="{{item.headers}}" 
+          wx:for-index="colIndex"
+          wx:for-item="header" 
+          wx:key="*this"
+          wx:if="{{colIndex > 0}}">
+      {{header}}
+    </view>
+  </view>
+
+  <!-- 表格内容 -->
+  <view class="table__body">
+    <view class="table__row" wx:for="{{item.rows}}" wx:for-item="row" wx:key="id">
+      <!-- 第一列（行标题） -->
+      <view class="table__cell table__cell--first">
+        {{row.label}}
+      </view>
+
+      <!-- 其他列（单元格数据） -->
+      <view class="table__cell table__cell--col" 
+            wx:for="{{row.cells}}" 
+            wx:for-index="colIndex"
+            wx:for-item="cell" 
+            wx:key="index"
+            data-row="{{row.label}}"
+            data-col="{{colIndex}}"
+            data-cell="{{cell}}"
+            bindtap="onCellTap">
+        
+        <!-- 如果单元格有内容 -->
+        <view wx:if="{{cell}}" class="table__content">
+          <!-- 复选框类型 -->
+          <view wx:if="{{cell.type === 'checkbox'}}" 
+                class="table__checkbox {{cell.checked ? 'checked' : ''}}">
+            <text wx:if="{{cell.checked}}" class="table__checkbox-icon">✓</text>
+          </view>
+          
+          <!-- 文本内容 -->
+          <text class="table__text">{{cell.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

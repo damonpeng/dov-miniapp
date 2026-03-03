@@ -1,11 +1,12 @@
 # dov - 基于JSON配置的小程序静态化框架
 
-采取“小程序代码固定 + JSON配置更新”的模式，**开发无代码、静态轻运维**。更新小程序，只需更改CDN上的JSON配置即可。
+采取"小程序代码固定 + JSON配置更新"的模式，**开发无代码、静态轻运维**。更新小程序，只需更改CDN上的JSON配置即可。
 
 特点：
  - **无代码**：仅需初始化发布一次
  - **无发布**：修改JSON即可实现变更
  - **轻架构**：轻松对接云CDN架构，可支撑海量请求
+ - **可扩展**：支持集成原生小程序页面，灵活扩展复杂功能 ✨NEW
 
 
 ## 示例
@@ -25,7 +26,7 @@
 
 也可以在现有小程序中，`npm install -S dov-miniapp` 手动安装此包，进行混合应用。
 
-注意，每次更新npm包版本后，需要在微信开发者工具，选择“工具 -> 构建npm”使生效，详见[小程序官方文档](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)。
+注意，每次更新npm包版本后，需要在微信开发者工具，选择"工具 -> 构建npm"使生效，详见[小程序官方文档](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html)。
 
 
 ## 配置文档
@@ -100,12 +101,110 @@
 
 支持的组件如下表。
 
-| 组件名称 | 功能             |
-| -------- | ---------------- |
-| card     | 图文卡           |
-| cell     | 通栏条，支持折叠 |
-| grid     | 网格             |
-| player   | 音乐播放器       |
+| 组件名称 | 功能             | 原生页面支持 | 原生组件支持 |
+| -------- | ---------------- | ------------ | ------------ |
+| card     | 图文卡           | -            | -            |
+| cell     | 通栏条，支持折叠 | ✅           | -            |
+| grid     | 网格             | ✅           | -            |
+| player   | 音乐播放器       | -            | -            |
+| native   | 原生组件包装器   | -            | ✅ NEW       |
+
+### C6 原生组件混合渲染 ✨NEW
+
+dov-miniapp 支持在页面内混合渲染原生小程序自定义组件！
+
+#### 快速示例
+
+**1. 创建自定义组件** (`components/my-widget/index.ts`)
+
+```typescript
+Component({
+  properties: {
+    title: String
+  },
+  methods: {
+    onClick() {
+      wx.showToast({ title: '点击了组件' });
+    }
+  }
+});
+```
+
+**2. 注册组件** (`pages/dov.json`)
+
+```json
+{
+  "usingComponents": {
+    "dov": "dov-miniapp/dov",
+    "my-widget": "/components/my-widget/index"
+  }
+}
+```
+
+**3. 在 manifest 中配置**
+
+```json
+{
+  "struct": "component",
+  "type": "native",
+  "items": [
+    {
+      "title": "我的组件",
+      "componentPath": "my-widget",
+      "props": {
+        "title": "Hello World"
+      }
+    }
+  ]
+}
+```
+
+#### 详细文档
+
+查看完整的原生组件集成指南：[NATIVE_COMPONENT_INTEGRATION.md](../NATIVE_COMPONENT_INTEGRATION.md)
+
+#### 两种方案对比
+
+| 特性 | 原生组件（NEW） | 页面跳转 |
+|------|----------------|----------|
+| 渲染位置 | 页面内嵌入 | 新页面 |
+| 导航栈 | 不增加 | +1 层 |
+| 适用场景 | 小部件、卡片 | 完整功能 |
+| 推荐使用 | 数据展示 | 复杂交互 |
+
+---
+
+### C7 原生页面跳转 ✨UPDATED
+
+dov-miniapp 也支持跳转到原生小程序页面！
+
+#### 快速示例
+
+```json
+{
+  "struct": "component",
+  "type": "grid",
+  "items": [
+    {
+      "title": "计算器",
+      "desc": "打开原生页面",
+      "poster": "/static/icon/calculator.png",
+      "link": "/pages/calculator/index"
+    }
+  ]
+}
+```
+
+#### 详细文档
+
+查看完整的原生页面集成指南：[docs/NATIVE_PAGE_INTEGRATION.md](./docs/NATIVE_PAGE_INTEGRATION.md)
+
+支持的功能：
+- ✅ 通过 `link` 字段跳转原生页面
+- ✅ 支持带参数跳转
+- ✅ 自动处理 navigateTo 和 switchTab
+- ✅ Grid 和 Cell 组件完全支持
+- ✅ 与 dov 框架无缝融合
 
 
 ## Todos

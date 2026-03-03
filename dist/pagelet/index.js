@@ -1,4 +1,5 @@
 "use strict";
+const towxml = require('../towxml/index');
 Component({
     options: {
         multipleSlots: true // 启用多slot支持
@@ -10,8 +11,8 @@ Component({
             value: [],
         },
         texts: {
-            type: Object,
-            value: {},
+            type: Array,
+            value: [],
         },
         title: {
             type: String,
@@ -20,18 +21,27 @@ Component({
     },
     // 组件内部数据
     data: {
-        isShow: true
+        isShow: true,
+        parsedTexts: []
     },
     lifetimes: {
         created() {
         },
         ready() {
             console.log(`[pagelet][attached]`, this.data);
+            // 转换 texts 数组为 towxml 格式
+            if (this.data.texts && this.data.texts.length > 0) {
+                const parsedTexts = this.data.texts.map((text) => {
+                    return towxml(text, 'markdown');
+                });
+                this.setData({ parsedTexts });
+            }
             // 设置分享数据
             const app = getApp();
+            const firstImage = this.data.images[0];
             app.dov.data.currentShareData = {
                 title: this.data.title || '',
-                imageUrl: typeof this.data.images[0] === 'string' ? this.data.images[0] : this.data.images[0].url || '',
+                imageUrl: typeof firstImage === 'string' ? firstImage : firstImage?.url || '',
             };
             this.setData({ isShow: true });
         }

@@ -1,5 +1,4 @@
 "use strict";
-const app = getApp();
 Component({
     properties: {
         component: {
@@ -23,6 +22,7 @@ Component({
     },
     methods: {
         async onClickGridItem(event) {
+            const app = getApp();
             const { link, router } = event.target.dataset;
             if (link || router) {
                 await app.dov.openURL(link, router);

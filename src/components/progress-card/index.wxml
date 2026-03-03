@@ -1,0 +1,48 @@
+<view class="progress-card" wx:for="{{items}}" wx:key="id">
+  <!-- 顶部渐变卡片：工程信息 -->
+  <view class="progress-card__summary" wx:if="{{item.summary}}">
+    <!-- 编辑/保存图标 -->
+    <view class="progress-card__edit-btn" bindtap="onEditToggle">
+      <text class="progress-card__edit-icon" wx:if="{{!editMode}}">✎</text>
+      <text class="progress-card__save-icon" wx:else>✓</text>
+    </view>
+    
+    <view class="progress-card__info">
+      <!-- 动态渲染summary字段 -->
+      <view class="progress-card__info-item" wx:for="{{item.summary.fields}}" wx:for-item="field" wx:key="key" wx:if="{{!field.row}}">
+        <text class="progress-card__label">{{field.label}}</text>
+        <view wx:if="{{editMode}}" class="progress-card__input-wrapper">
+          <input 
+            class="progress-card__input {{field.suffix ? 'progress-card__input--has-suffix' : ''}}"
+            value="{{projectInfo[field.key]}}"
+            placeholder="{{field.placeholder}}"
+            bindinput="onInputChange"
+            bindblur="onInputBlur"
+            data-field="{{field.key}}"
+          />
+          <text wx:if="{{field.suffix}}" class="progress-card__suffix">{{field.suffix}}</text>
+        </view>
+        <text wx:else class="progress-card__value">{{projectInfo[field.key] || '未设置'}}{{field.suffix ? field.suffix : ''}}</text>
+      </view>
+      
+      <!-- 第二行字段（row为true的字段） -->
+      <view class="progress-card__info-row" wx:if="{{item.summary.rowFields && item.summary.rowFields.length > 0}}">
+        <view class="progress-card__info-item" wx:for="{{item.summary.rowFields}}" wx:for-item="field" wx:key="key">
+          <text class="progress-card__label">{{field.label}}</text>
+          <view wx:if="{{editMode}}" class="progress-card__input-wrapper">
+            <input 
+              class="progress-card__input {{field.suffix ? 'progress-card__input--has-suffix' : ''}}"
+              value="{{projectInfo[field.key]}}"
+              placeholder="{{field.placeholder}}"
+              bindinput="onInputChange"
+              bindblur="onInputBlur"
+              data-field="{{field.key}}"
+            />
+            <text wx:if="{{field.suffix}}" class="progress-card__suffix">{{field.suffix}}</text>
+          </view>
+          <text wx:else class="progress-card__value">{{projectInfo[field.key] || '未设置'}}{{field.suffix ? field.suffix : ''}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,39 @@
+<view class="dov-banner">
+  <swiper 
+    class="dov-banner__swiper"
+    indicator-dots="{{component.settings.indicatorDots !== false}}"
+    indicator-color="{{component.settings.indicatorColor || 'rgba(0, 0, 0, .3)'}}"
+    indicator-active-color="{{component.settings.indicatorActiveColor || '#000'}}"
+    autoplay="{{component.settings.autoplay !== false}}"
+    interval="{{component.settings.interval || 5000}}"
+    duration="{{component.settings.duration || 500}}"
+    circular="{{component.settings.circular !== false}}"
+    style="height: {{component.settings.height || '200px'}}; border-radius: {{component.settings.borderRadius || '0px'}};"
+    bindchange="onChange"
+  >
+    <block wx:for="{{items}}" wx:key="index">
+      <swiper-item>
+        <view 
+          class="dov-banner__item" 
+          bindtap="onClickBanner" 
+          data-index="{{index}}"
+        >
+          <image 
+            class="dov-banner__image" 
+            src="{{item.poster || item.image || item.src}}" 
+            mode="{{component.settings.mode || 'aspectFill'}}"
+            lazy-load="{{component.settings.lazyLoad !== false}}"
+          />
+          <view 
+            wx:if="{{item.title || item.desc}}" 
+            class="dov-banner__content"
+            style="{{component.settings.contentPosition === 'top' ? 'top: 0;' : 'bottom: 0;'}}"
+          >
+            <view wx:if="{{item.title}}" class="dov-banner__title">{{item.title}}</view>
+            <view wx:if="{{item.desc}}" class="dov-banner__desc">{{item.desc}}</view>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>

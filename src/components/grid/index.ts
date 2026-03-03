@@ -1,5 +1,3 @@
-const app = getApp();
-
 Component({
   properties: {
     component: {
@@ -26,6 +24,7 @@ Component({
 
   methods: {
     async onClickGridItem(event: any) {
+      const app = getApp() as any;
       const { link, router } = event.target.dataset;
 
       if (link || router) {

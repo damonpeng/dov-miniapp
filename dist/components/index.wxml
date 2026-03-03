@@ -25,11 +25,27 @@
     <swiper items="{{item.items}}" component="{{item}}" module="{{module}}" />
   </block>
 
+  <block wx:elif="{{item.type==='banner'}}">
+    <banner items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
   <block wx:elif="{{item.type==='sidebar'}}">
     <sidebar items="{{item.items}}" component="{{item}}" module="{{module}}" />
   </block>
 
+  <block wx:elif="{{item.type==='progress-card'}}">
+    <progress-card items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='timeline'}}">
+    <timeline items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
+  <block wx:elif="{{item.type==='table'}}">
+    <table items="{{item.items}}" component="{{item}}" module="{{module}}" />
+  </block>
+
   <block wx:else>
-    [dov/components/index.wxml]Not supported component "{{component.type}}".
+    [dov/components/index.wxml]Not supported component "{{item.type}}".
   </block>
 </block>

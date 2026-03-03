@@ -90,6 +90,23 @@ Component({
             default:
               console.error('Invalid openUrl', url);
           }
+        } else if (url.startsWith('/pages/')) {
+          // Native miniprogram page path
+          // Support: /pages/example/index or /pages/example/index?param=value
+          console.log('[dov] Navigate to native page:', url);
+          wx.navigateTo({
+            url: url,
+            fail: (err) => {
+              console.error('[dov] Failed to navigate to native page:', url, err);
+              // Try switchTab if navigateTo fails (for tabBar pages)
+              wx.switchTab({
+                url: url.split('?')[0],
+                fail: (tabErr) => {
+                  console.error('[dov] Failed to switchTab to native page:', url, tabErr);
+                }
+              });
+            }
+          });
         } else if (/^weapp:\/\//.test(url)) {
           // weapp internal schema
           const matched = url.match(/weapp:\/\/([^/|$]*)([^$]*)/);
@@ -111,7 +128,7 @@ Component({
             shortLink: url
           });
         } else {
-          console.error('[dov/dov.ts]', url);
+          console.error('[dov/dov.ts] Invalid URL:', url);
         }
       }
     },

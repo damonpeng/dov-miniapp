@@ -7,6 +7,10 @@
     "card": "./card/index",
     "cell": "./cell/index",
     "map": "./map/index",
-    "swiper": "./swiper/index"
+    "swiper": "./swiper/index",
+    "banner": "./banner/index",
+    "progress-card": "./progress-card/index",
+    "timeline": "./timeline/index",
+    "table": "./table/index"
   }
 }

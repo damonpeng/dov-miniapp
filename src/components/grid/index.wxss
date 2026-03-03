@@ -1,6 +1,6 @@
 .dov-grid__title {
   margin: 8px -5px 0; /* 两侧不留空白，最多可容纳6字 */
-  font-size: 14px;
+  font-size: var(--dov-grid__title_font-size, 14px);
   line-height: 18px;
   text-align: center;
   color: var(--dov-grid__title_color, #222);
